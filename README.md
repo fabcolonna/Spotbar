@@ -29,6 +29,10 @@ cd frontend && yarn install && cd ..
 
 You should now be back in the root directory. In here, run `yarn dev` to run the app.
 
+### Spotify API
+
+This app relies on Spotify API. By logging into the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) you can get the authentication details that this app requires (Client ID & Client SECRET). Setup your `.env` file in the `backend/` directory using the `.env.example` file provided, and you should be good to go.
+
 ## Built With
 
 * [Electron.js](https://www.electronjs.org/) - Backend
