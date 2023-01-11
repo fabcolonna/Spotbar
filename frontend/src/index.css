@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&display=swap');
+
+body {
+  /* background: linear-gradient(rgba(30, 215, 96, 1), rgba(25, 20, 20, 1)); */
+  background: linear-gradient(90deg, rgb(27, 58, 28), rgba(18, 18, 18));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  font-family: Raleway, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 10% 0%;
+  }
+
+  50% {
+    background-position: 100% 100%;
+  }
+
+  100% {
+    background-position: 10% 0%;
+  }
+}
+
+@layer base {
+  h1, h2 {
+    @apply text-white
+  }
+
+  h1 {
+    @apply font-black text-3xl
+  }
+
+  h2 {
+    @apply font-semibold text-xl
+  }
+
+  button {
+    @apply shadow-2xl font-extrabold duration-200 ease-linear items-center;
+    @apply hover:scale-110 hover:text-white hover:transition;
+    @apply active:scale-100 active:transition active:opacity-50;
+  }
+}
+
+@layer components {
+  .login-sec, .home-sec {
+    @apply flex flex-col place-items-center justify-center;
+    @apply h-screen;
+  }
+
+  .login-btn {
+    @apply rounded-full px-10 py-2 inline-flex;
+    background-color: #1db954;
+  }
+
+  .control-btn {
+    background-color: #1db954;
+    @apply inline-block rounded-full;
+    @apply ml-3 mr-3 p-5 aspect-square;
+  }
+
+  .small-control-btn {
+    @apply bg-transparent shadow-none;
+    @apply w-fit h-fit p-4;
+    @apply inline-block rounded-full;
+    @apply ml-3 mr-3 aspect-square;
+}
+}
