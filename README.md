@@ -1,4 +1,8 @@
-# Spotbar
+<p align="center">
+  <img src="./assets/big_color_icon.png" alt="Spotbar Icon"/>
+</p>
+
+# **Spotbar**
 
 Spotbar aims to be a small app that runs in the macOS menu bar (Windows/Linux support may be present, but I haven't had a chance to test it out yet and I'm not fully focusing on the code that is necessary to make the app working correctly on those OSes), that offers media controls (back, play/pause, forward), album art and details, artist info and progress bar (NOT present *at all* at the moment 🌞). I'm also considering adding a spectrum analyzer in the background for no particular reason other than aesthetics 🎶.
 
@@ -10,7 +14,7 @@ The app requires `node.js`. Make sure to have it installed before proceeding, by
 
 The node package manager `npm` is also required. If you grabbed the installer from the node website then it should be already present in your system. Make sure it's installed by typing `npm --version`. Installing it should be pretty straight-forward.
 
-### Installing
+## Installing
 
 Before starting, install `yarn` with the command `npm install --global yarn`. Then clone this repo and install the required modules:
 
@@ -29,15 +33,15 @@ cd frontend && yarn install && cd ..
 
 You should now be back in the root directory. In here, run `yarn dev` to run the app. But **NOT** before you read the rest of this file!
 
-### Spotify API
+## Spotify API
 
 This app relies on Spotify API. By logging into the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) you can get the authentication details that this app requires (Client ID & Client SECRET). Setup your `.env` file in the root directory using the reference `.env.example` file provided, and you should be good to go.
 
 ## Built With
 
-* [Electron.js](https://www.electronjs.org/) - Backend
-* [React](https://reactjs.org/) - Frontend
-* [TailwindCSS](https://tailwindcss.com/) - CSS utility framework
+* [Electron.js](https://www.electronjs.org/) - Backend (i.e. App window + IPC Handler for Spotify API calls made @ the frontend)
+* [React.js](https://reactjs.org/) - Frontend
+* [TailwindCSS](https://tailwindcss.com/) - CSS utility framework, together with PostCSS
 
 ## Contributing
 
