@@ -1,9 +1,14 @@
 export {}
 
 declare global {
+   interface Image {
+      width: number
+      height: number
+      url: string
+   }
    interface Window {
-      api: {
-         login: (args?: any[]) => number;
+      spotifyApi: {
+         loginGetMe(): { name: string, image?: Image }?
       }
    }
 }

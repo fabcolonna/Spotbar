@@ -1,15 +1,14 @@
 {
   "name": "spotbar",
   "version": "1.0.0",
-  "description": "Spotify controls from macOS menu bar or Windows Taskbar",
-  "main": "./backend/src/main.js",
+  "description": "Spotify controls from macOS menu bar",
   "author": "Levar",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "server": "cd backend && yarn dev",
+    "server": "cd backend && yarn run electron-dev",
     "client": "cd frontend && cross-env BROWSER=none yarn start",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "dev": "concurrently -k \"yarn server\" \"yarn client\""
   },
   "devDependencies": {
     "concurrently": "^7.6.0"

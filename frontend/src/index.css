@@ -61,6 +61,11 @@ body {
     background-color: #1db954;
   }
 
+  .login-btn-smaller {
+    @apply rounded-full px-2 py-2 inline-flex;
+    background-color: #1db954;
+  }
+
   .control-btn {
     background-color: #1db954;
     @apply inline-block rounded-full;

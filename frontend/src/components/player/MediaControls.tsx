@@ -1,27 +1,38 @@
-import { useContext } from "react";
-import { PlayerContext } from "../Player";
+import { useContext } from 'react'
+import { PlayerContext } from './Player'
 
-import { faBackwardStep, faPlay, faForwardStep, faHeart, faRadio, faPowerOff } from "@fortawesome/free-solid-svg-icons";
-import { faSpotify } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpotify } from '@fortawesome/free-brands-svg-icons'
+import {
+   faBackwardStep,
+   faForwardStep,
+   faHeart,
+   faPlay,
+   faPowerOff,
+   faRadio
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function MediaControls() {
-   const playerProps = useContext(PlayerContext);
+   const playerProps = useContext(PlayerContext)
 
-   const title = playerProps.title || '-';
+   const title = playerProps.title || '-'
    const album = playerProps.album || '-'
-   const artist = playerProps.artist || '-';
+   const artist = playerProps.artist || '-'
 
    return (
       <div className="flex flex-col h-screen w-screen items-center justify-center">
          <div className="flex">
-            <button className="small-control-btn text-white" >
+            <button className="small-control-btn text-white">
                <FontAwesomeIcon icon={faHeart} fixedWidth />
             </button>
             <div>
-               <h2 className="font-black text-2xl break-word text-center">{title}</h2>
+               <h2 className="font-black text-2xl break-word text-center">
+                  {title}
+               </h2>
                <h2 className="font-extrabold text-base text-center">{album}</h2>
-               <h3 className="font-normal text-sm text-white text-center">{artist}</h3>
+               <h3 className="font-normal text-sm text-white text-center">
+                  {artist}
+               </h3>
             </div>
             <button className="small-control-btn text-white">
                <FontAwesomeIcon icon={faRadio} fixedWidth />
@@ -32,7 +43,7 @@ export default function MediaControls() {
                <button className="control-btn px-4 py-4 bg-transparent text-white">
                   <FontAwesomeIcon icon={faBackwardStep} size="2x" fixedWidth />
                </button>
-               <button className="control-btn" >
+               <button className="control-btn">
                   <FontAwesomeIcon icon={faPlay} size="2x" fixedWidth />
                </button>
                <button className="control-btn px-4 py-4 bg-transparent text-white">
@@ -47,5 +58,5 @@ export default function MediaControls() {
             <FontAwesomeIcon icon={faSpotify} fixedWidth />
          </button>
       </div>
-   );
+   )
 }
