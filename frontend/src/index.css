@@ -77,5 +77,23 @@ body {
     @apply w-fit h-fit p-4;
     @apply inline-block rounded-full;
     @apply ml-3 mr-3 aspect-square;
-}
+  }
+
+  .scroll-cont {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .scroll-text {
+    animation: scroll 15s ease-in-out 2s infinite alternate;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% + 200px));
+    }
+  }
 }

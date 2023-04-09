@@ -11,4 +11,13 @@ declare global {
       name: string
       image?: SpotifyProfileImage
    }
+
+   interface SpotifyTrackImage extends SpotifyProfileImage {}
+
+   interface SpotifyPlayingTrack {
+      name: string
+      artist: string
+      album: string
+      albumImage?: SpotifyTrackImage
+   }
 }

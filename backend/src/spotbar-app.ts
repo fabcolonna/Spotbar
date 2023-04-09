@@ -1,11 +1,11 @@
-import { BrowserWindow, Menu, Tray, app, dialog, globalShortcut, nativeImage } from 'electron'
+import { BrowserWindow, Menu, Tray, app, globalShortcut, nativeImage } from 'electron'
 import isDev from 'electron-is-dev'
 import positioner from 'electron-traywindow-positioner'
 import path from 'path'
 // try { require('electron-reloader')(module) } catch (_) {}
 
 export default class SpotbarElectronApp {
-   static RESOURCES = {
+   private static readonly RESOURCES = {
       html_file: path.join(__dirname, '../../../frontend/public/index.html'),
       icon_file: path.join(__dirname, '../../../assets/icon/icon_16x16@2x.png'),
       preload: path.join(__dirname, './preload.js')
@@ -13,33 +13,25 @@ export default class SpotbarElectronApp {
 
    // These attrs will be initialized in the whenReady callback, the ! assertion
    // is to silence TS erros complaining about not initializing them explicitly in the ctor
-   private _window!: BrowserWindow
-   private _tray!: Tray
+   private win!: BrowserWindow
+   private tray!: Tray
+
+   public get window() {
+      return this.win
+   }
 
    constructor(width: number = 700, height: number = 300) {
       app.dock.hide()
       app.on('window-all-closed', () => app.quit())
       app.whenReady().then(() => {
          globalShortcut.register('CommandOrControl+Q', () => app.quit())
-
          this.createWindow(width, height)
          this.createTray()
-      })
-
-      process.on('uncaughtException', (err) => {
-         const messageBoxOptions = {
-            type: 'error',
-            title: 'Spotbar error',
-            message: err.message
-         }
-
-         dialog.showMessageBoxSync(messageBoxOptions)
-         app.exit(1)
       })
    }
 
    private createWindow = (width: number, height: number) => {
-      this._window = new BrowserWindow({
+      this.win = new BrowserWindow({
          width: width,
          height: height,
          show: false,
@@ -59,10 +51,10 @@ export default class SpotbarElectronApp {
          }
       })
 
-      this._window.loadURL(isDev ? 'http://localhost:3000' : SpotbarElectronApp.RESOURCES.html_file)
-      this._window.setVisibleOnAllWorkspaces(true)
-      this._window.setAlwaysOnTop(true)
-      this._window.on('blur', () => this._window.hide())
+      this.win.loadURL(isDev ? 'http://localhost:3000' : SpotbarElectronApp.RESOURCES.html_file)
+      this.win.setVisibleOnAllWorkspaces(true)
+      this.win.setAlwaysOnTop(true)
+      this.win.on('blur', () => this.win.hide())
    }
 
    private createTray = () => {
@@ -76,15 +68,19 @@ export default class SpotbarElectronApp {
          { label: 'Quit Spotbar', type: 'normal', role: 'quit' }
       ])
 
-      this._tray = new Tray(icon)
-      this._tray.setIgnoreDoubleClickEvents(true)
-      this._tray.on('right-click', () => this._tray.popUpContextMenu(contextMenu))
-      this._tray.on('click', () => {
-         if (this._window.isVisible()) this._window.hide()
+      /// TODO -> MAKE CONTEXT MENU WORK!
+
+      this.tray = new Tray(icon)
+      this.tray.setIgnoreDoubleClickEvents(true)
+      this.tray.on('right-click', () => this.tray.popUpContextMenu(contextMenu))
+      this.tray.on('click', () => {
+         if (this.win.isVisible()) this.win.hide()
          else {
-            positioner.position(this._window, this._tray.getBounds())
-            this._window.show()
+            positioner.position(this.win, this.tray.getBounds())
+            this.win.show()
          }
       })
    }
+
+   public showAfterLogin = () => this.tray.emit('click')
 }

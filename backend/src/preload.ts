@@ -1,5 +1,6 @@
 import { ipcRenderer, contextBridge } from 'electron'
 
 contextBridge.exposeInMainWorld('spotifyApi', {
-   loginGetMe: () => ipcRenderer.invoke('spotifyLoginGetMe')
+   loginGetMe: (): Promise<SpotifyMe> => ipcRenderer.invoke('spotifyLoginGetMe'),
+   getPlayingTrack: (): Promise<SpotifyPlayingTrack> | undefined => ipcRenderer.invoke('spotifyGetPlayingTrack')
 })

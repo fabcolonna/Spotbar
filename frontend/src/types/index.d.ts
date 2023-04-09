@@ -1,14 +1,12 @@
+import { SpotifyMe, SpotifyPlayingTrack } from '../../backend/src/types/index'
+
 export {}
 
 declare global {
-   interface Image {
-      width: number
-      height: number
-      url: string
-   }
    interface Window {
       spotifyApi: {
-         loginGetMe(): { name: string, image?: Image }?
+         loginGetMe: () => Promise<SpotifyMe>,
+         getPlayingTrack: () => Promise<SpotifyPlayingTrack> | undefined
       }
    }
 }
