@@ -23,10 +23,9 @@ const SpotbarRoutes = () => {
             setLogged(true)
          })
          .catch((err) => {
-            alert(err)
             setUserData({ name: '' })
             setLogged(false)
-            navigate('/error', { state: { message: err } })
+            navigate('/error/' + err)
          })
    }
 
@@ -42,7 +41,7 @@ const SpotbarRoutes = () => {
             <Route path="/" element={logged ? <Navigate to="/welcome" /> : <Login onLogin={login} />} />
             <Route path="/welcome" element={logged ? <Welcome {...userData} onLogout={logout} /> : <Navigate to="/" />} />
             <Route path="/player" element={logged ? <Player /> : <Navigate to="/" />} />
-            <Route path="/error" element={<Error />} />
+            <Route path="/error/:message" element={<Error />} />
          </Routes>
       </AnimatePresence>
    )

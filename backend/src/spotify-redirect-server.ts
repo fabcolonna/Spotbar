@@ -33,7 +33,7 @@ export default class SpotifyRedirectServer {
    }
 
    public getAuthorizationCode = (): Promise<string> => {
-      if (this.isListening) throw new Error('Server is already listening. Cannot proceed')
+      if (this.isListening) return Promise.reject('Server is already listening. Cannot proceed')
 
       let responseRef: any
       const promise = new Promise<string>((res, _) => (responseRef = res))

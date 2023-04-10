@@ -1,11 +1,8 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-interface Props {
-   message?: string
-}
-
-export default function Error(props: Props) {
+export default function Error() {
+   const { message } = useParams()
    const navigate = useNavigate()
 
    return (
@@ -19,7 +16,7 @@ export default function Error(props: Props) {
                <h1 className="font-black text-3xl">Ops! Something went wrong 🤕</h1>
             </div>
             <div className="mb-2">
-               <h2 className="font-semibold text-xl">{props.message || "No details available"}</h2>
+               <h4 className="font-semibold text-center pr-10 pl-10 text-white">{message || "No details available"}</h4>
             </div>
             <div className="mt-2">
                <button className="login-btn" onClick={() => navigate(-1)}>

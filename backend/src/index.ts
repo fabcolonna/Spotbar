@@ -21,13 +21,9 @@ const spotifyTokenManager = new SpotifyTokenManager(spotbar, spotifyHandle)
 /////////   IPC FUNCTIONS   /////////
 
 ipcMain.handle('spotifyLoginGetMe', async (): Promise<SpotifyMe> => {
-   await spotifyTokenManager.assign().catch((err) => {
-      return Promise.reject("Token assignment: " + err)
-   })
+   await spotifyTokenManager.assign()
 
-   const userInfo = await spotifyHandle.getMe().catch((err) => {
-      return Promise.reject("Couldn't get user info")
-   })
+   const userInfo = await spotifyHandle.getMe()
 
    if (userInfo.body.product !== 'premium') return Promise.reject('Non Premium accounts are not supported by Spotbar')
 
@@ -38,13 +34,9 @@ ipcMain.handle('spotifyLoginGetMe', async (): Promise<SpotifyMe> => {
 })
 
 ipcMain.handle('spotifyGetPlayingTrack', async (): Promise<SpotifyPlayingTrack | undefined> => {
-   await spotifyTokenManager.refreshIfExpired().catch((err) => {
-      return Promise.reject("Token refresh: " + err)
-   })
+   await spotifyTokenManager.refreshIfExpired()
 
-   const playingNow = await spotifyHandle.getMyCurrentPlayingTrack().catch(() => {
-      return Promise.reject('Could not get currently playing track')
-   })
+   const playingNow = await spotifyHandle.getMyCurrentPlayingTrack()
 
    const details = playingNow.body.item
 

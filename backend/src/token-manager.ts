@@ -8,7 +8,9 @@ import cryptojs from 'crypto-js'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as os from 'os'
+import * as dotenv from 'dotenv'
 
+dotenv.config({ path: path.join(__dirname, '../../../.env') })
 interface TokenInfo {
    access: string
    refresh: string
@@ -16,7 +18,8 @@ interface TokenInfo {
 }
 
 export default class SpotifyTokenManager {
-   private static readonly TOK_FILE_PATH = path.join(os.tmpdir(), 'tk.sb')
+   private static readonly TOK_FILE_PATH = path.join(os.tmpdir(), process.env.TFILE!)
+   private static readonly KEY_FILE_PATH = path.join(os.tmpdir(), process.env.KFILE!)
 
    private readonly spotifyApi: SpotifyWebApi
    private readonly spotbarApp: SpotbarElectronApp
@@ -28,23 +31,15 @@ export default class SpotifyTokenManager {
    }
 
    public assign = async () => {
-      let done = false
-
-      if (fs.existsSync(SpotifyTokenManager.TOK_FILE_PATH)) {
+      const filesExist = fs.existsSync(SpotifyTokenManager.TOK_FILE_PATH) && fs.existsSync(SpotifyTokenManager.KEY_FILE_PATH)
+      if (filesExist) {
          this.tokenInfo = this.getFromFile()
-         if (!this.isValid()) console.log('File contained expired tokens. Refresh necessary')
-         else {
-            console.log('File contained valid tokens. Using them')
-            done = true
-         }
+         console.log("Got something from file")
       }
 
-      if (!done) {
-         this.tokenInfo = await this.getFromApi().catch((err) => {
-            return Promise.reject(err)
-         })
-
-         console.log('File not found. Got initial tokens from API')
+      if (!filesExist || !this.isValid()) {
+         console.log("File not found or invalid token, requesting")
+         this.tokenInfo = await this.getFromApi()
          this.encryptAndSave()
       }
 
@@ -53,16 +48,9 @@ export default class SpotifyTokenManager {
    }
 
    public refreshIfExpired = async () => {
-      if (this.isValid()) {
-         console.log('Skipping reassignment: Token still valid')
-         return
-      }
+      if (this.isValid()) return
 
-      console.log('Token expired, requesting a new one')
-      const newTok = await this.spotifyApi.refreshAccessToken().catch(() => {
-         return Promise.reject("Could not refresh tokens")
-      })
-
+      const newTok = await this.spotifyApi.refreshAccessToken()
       this.tokenInfo = {
          access: newTok.body.access_token,
          refresh: newTok.body.refresh_token || this.tokenInfo.refresh, // If it's not present
@@ -78,10 +66,7 @@ export default class SpotifyTokenManager {
    }
 
    private getFromApi = async (): Promise<TokenInfo> => {
-      const redirectPort = 8888
-      const redirectEndpointName = '/cback'
-
-      this.spotifyApi.setRedirectURI('http://localhost:' + redirectPort + redirectEndpointName)
+      this.spotifyApi.setRedirectURI('http://localhost:8888/cback')
       const responseServer = new SpotifyRedirectServer('/cback', 8888)
 
       const scopes = ['user-read-private', 'user-read-email', 'user-read-currently-playing', 'user-read-playback-state', 'user-modify-playback-state']
@@ -96,21 +81,16 @@ export default class SpotifyTokenManager {
       })
 
       setTimeout(() => {
-         //browser.on('blur', () => browser.close())
          browser.loadURL(authURL)
          browser.show()
-      }, 300) // So server listens before the browser opens
+      }, 300)
 
-      const code = await responseServer.getAuthorizationCode().catch(() => {
-         return Promise.reject('Could not retrieve login authorization code')
-      })
+      const code = await responseServer.getAuthorizationCode()
 
       this.spotbarApp.showAfterLogin()
       browser.close() // The electron window will not close if there's an error
 
-      const tokens = await this.spotifyApi.authorizationCodeGrant(code).catch(() => {
-         return Promise.reject('Could not retrieve token(s)')
-      })
+      const tokens = await this.spotifyApi.authorizationCodeGrant(code)
 
       return {
          access: tokens.body.access_token,
@@ -120,21 +100,26 @@ export default class SpotifyTokenManager {
    }
 
    private getFromFile = (): TokenInfo => {
-      throw new Error('UNIMPLEMENTED')
+      const hexKeys = fs.readFileSync(SpotifyTokenManager.KEY_FILE_PATH, 'hex')
+      const regKeys = cryptojs.enc.Hex.parse(hexKeys).toString(cryptojs.enc.Utf8)
+      const { key, iv } = JSON.parse(regKeys)
+      console.log("got: " + key)
+      
+      const enc = fs.readFileSync(SpotifyTokenManager.TOK_FILE_PATH).toString()
+      return JSON.parse(cryptojs.AES.decrypt(enc, key, { iv: iv }).toString())
    }
 
    private encryptAndSave = () => {
-      const key = cryptojs.lib.WordArray.random(16)
-      const iv = cryptojs.lib.WordArray.random(16)
-
-      const obj = {
-         key: key,
-         iv: iv,
-         data: cryptojs.AES.encrypt(JSON.stringify(this.tokenInfo), key, { iv: iv }).ciphertext.toString()
+      const keys = {
+         key: cryptojs.lib.WordArray.random(16),
+         iv: cryptojs.lib.WordArray.random(16)
       }
+      console.log(keys.key)
 
-      const hexStr = cryptojs.enc.Hex.stringify(cryptojs.enc.Hex.parse(JSON.stringify(obj)))
-      fs.writeFileSync(SpotifyTokenManager.TOK_FILE_PATH, JSON.stringify(obj))
-      console.log(obj + ' ::: ' + SpotifyTokenManager.TOK_FILE_PATH)
+      const hexKeys = cryptojs.enc.Hex.stringify(cryptojs.enc.Hex.parse(JSON.stringify(keys)))
+      fs.writeFileSync(SpotifyTokenManager.KEY_FILE_PATH, hexKeys)
+
+      const encData = cryptojs.AES.encrypt(JSON.stringify(this.tokenInfo), keys.key, { iv: keys.iv }).ciphertext.toString()
+      fs.writeFileSync(SpotifyTokenManager.TOK_FILE_PATH, encData)
    }
 }
