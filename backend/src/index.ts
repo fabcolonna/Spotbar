@@ -1,3 +1,4 @@
+import axios from 'axios'
 import * as dotenv from 'dotenv'
 import { ipcMain } from 'electron'
 import electronReload from 'electron-reload'
@@ -8,6 +9,10 @@ import SpotifyTokenManager from './token-manager'
 
 electronReload(__dirname, {})
 dotenv.config({ path: path.join(__dirname, '../../../.env') })
+
+/* process.on('uncaughtException', (err) => {
+   dialog.showErrorBox('Spotbar error', 'Something went wrong: ' + err)
+}) */
 
 const spotbar = new SpotbarElectronApp()
 const spotifyHandle = new SpotifyWebApi({
@@ -21,9 +26,12 @@ const spotifyTokenManager = new SpotifyTokenManager(spotbar, spotifyHandle)
 /////////   IPC FUNCTIONS   /////////
 
 ipcMain.handle('spotifyLoginGetMe', async (): Promise<SpotifyMe> => {
-   await spotifyTokenManager.assign()
+   //await checkInternet() // If not connected, this should reject the Promise, hence throwing error
 
-   const userInfo = await spotifyHandle.getMe()
+   await spotifyTokenManager.assign()
+   const userInfo = await spotifyHandle.getMe().catch(() => {
+      return Promise.reject('Could not retrieve your profile info from Spotify')
+   })
 
    if (userInfo.body.product !== 'premium') return Promise.reject('Non Premium accounts are not supported by Spotbar')
 
@@ -33,22 +41,37 @@ ipcMain.handle('spotifyLoginGetMe', async (): Promise<SpotifyMe> => {
    }
 })
 
-ipcMain.handle('spotifyGetPlayingTrack', async (): Promise<SpotifyPlayingTrack | undefined> => {
+ipcMain.handle('spotifyGetPlaybackStatus', async (): Promise<SpotifyPlaybackStatus | undefined> => {
+   //await checkInternet(15000) // We wait 15 seconds before quitting
+   
    await spotifyTokenManager.refreshIfExpired()
+   const status = await spotifyHandle.getMyCurrentPlaybackState()
 
-   const playingNow = await spotifyHandle.getMyCurrentPlayingTrack()
+   const details = status.body || undefined
+   if (!details) return Promise.reject('Bad API request')
 
-   const details = playingNow.body.item
+   // If context doesn't exist, Spotify is closed everywhere
+   if (!details.context || !details.item) return undefined
 
-   return !details
-      ? undefined
-      : {
-           name: details.name,
-           // @ts-ignore
-           artist: details['artists'][0].name,
-           // @ts-ignore
-           albumImage: details['album'].images[0],
-           // @ts-ignore
-           album: details['album'].name
-        }
+   if (details.item) {
+      return {
+         device: {
+            name: details.device.name,
+            type: details.device.type,
+            volume: details.device.volume_percent
+         },
+         track: {
+            title: details.item.name,
+            // @ts-ignore
+            artists: details.item['artists'].map((obj) => obj.name).join(','),
+            // @ts-ignore
+            album: details.item['album'].name,
+            // @ts-ignore
+            albumImage: details.item['album'].images[0],
+            progressMilli: details.progress_ms,
+            durationMilli: details.item.duration_ms
+         },
+         isPlaying: details.is_playing
+      }
+   }
 })

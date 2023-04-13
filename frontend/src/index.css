@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&display=swap');
+@font-face {
+  font-family: 'Raleway';
+  src: url('../../resources/Raleway.ttf') format('truetype');
+  font-weight: 600 900;
+  font-style: normal;
+}
+
+/* @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&display=swap'); */
 
 body {
   /* background: linear-gradient(rgba(30, 215, 96, 1), rgba(25, 20, 20, 1)); */
@@ -29,6 +36,14 @@ body {
     background-position: 10% 0%;
   }
 }
+
+.music-album-div {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+
 
 @layer base {
   h1, h2 {

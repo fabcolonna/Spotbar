@@ -4159,7 +4159,7 @@ expect@^27.5.1:
 
 express@^4.17.3:
   version "4.18.2"
-  resolved "https://registry.npmjs.org/express/-/express-4.18.2.tgz"
+  resolved "https://registry.yarnpkg.com/express/-/express-4.18.2.tgz#3fabe08296e930c796c19e3c516979386ba9fd59"
   integrity sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==
   dependencies:
     accepts "~1.3.8"
@@ -4193,6 +4193,11 @@ express@^4.17.3:
     type-is "~1.6.18"
     utils-merge "1.0.1"
     vary "~1.1.2"
+
+extract-colors@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/extract-colors/-/extract-colors-2.0.6.tgz#4100d4768ce3813b768671350d327eca21aaf10d"
+  integrity sha512-oS1quNBm1jJVXAXRzqS/ZA2Syp9QmHv65z+6sZAGgHuZr5knRzu0QiJKFBCWElHQYvd19Yv/nRFDQX2nFUTQkQ==
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"

@@ -2,5 +2,9 @@ semi: false
 trailingComma: 'none'
 singleQuote: true
 tabWidth: 3
+useTabs: false
 singleAttributePerLine: false
-printWidth: 160
+printWidth: 240
+bracketSpacing: true
+bracketSameLine: false
+arrowParens: avoid

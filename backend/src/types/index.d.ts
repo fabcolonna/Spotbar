@@ -14,10 +14,24 @@ declare global {
 
    interface SpotifyTrackImage extends SpotifyProfileImage {}
 
-   interface SpotifyPlayingTrack {
+   interface SpotifyDevice {
       name: string
-      artist: string
+      type: string 
+      volume: Number | null
+   }
+
+   interface SpotifyTrack {
+      title: string 
+      artists: string
       album: string
       albumImage?: SpotifyTrackImage
+      progressMilli: Number | null
+      durationMilli: Number
+   }
+
+   interface SpotifyPlaybackStatus {
+      device: SpotifyDevice
+      track: SpotifyTrack
+      isPlaying: boolean
    }
 }

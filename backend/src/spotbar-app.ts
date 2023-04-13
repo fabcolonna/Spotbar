@@ -24,7 +24,7 @@ export default class SpotbarElectronApp {
       app.dock.hide()
       app.on('window-all-closed', () => app.quit())
       app.whenReady().then(() => {
-         globalShortcut.register('CommandOrControl+Q', () => app.quit())
+         //globalShortcut.register('CommandOrControl+Q', () => app.quit())
          this.createWindow(width, height)
          this.createTray()
       })
