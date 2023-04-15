@@ -85,6 +85,7 @@ body {
     background-color: #1db954;
     @apply inline-block rounded-full;
     @apply ml-3 mr-3 p-5 aspect-square;
+    @apply shadow-md !important
   }
 
   .small-control-btn {
@@ -92,6 +93,13 @@ body {
     @apply w-fit h-fit p-4;
     @apply inline-block rounded-full;
     @apply ml-3 mr-3 aspect-square;
+  }
+
+  .album-img {
+    @apply duration-200 ease-linear;
+    @apply hover:scale-[0.9] hover:transition;
+    @apply active:scale-[0.85] active:transition;
+
   }
 
   .scroll-cont {

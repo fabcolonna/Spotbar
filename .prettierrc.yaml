@@ -4,7 +4,7 @@ singleQuote: true
 tabWidth: 3
 useTabs: false
 singleAttributePerLine: false
-printWidth: 240
+printWidth: 150
 bracketSpacing: true
-bracketSameLine: false
+bracketSameLine: true
 arrowParens: avoid

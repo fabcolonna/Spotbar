@@ -1,37 +1,36 @@
 export {}
 
 declare global {
-   interface SpotifyProfileImage {
-      width?: number
-      height?: number
-      url: string
-   }
+   namespace Spotify {
+      interface Image {
+         width?: number
+         height?: number
+         url: string
+      }
+      interface Me {
+         name: string
+         image?: Image
+      }
 
-   interface SpotifyMe {
-      name: string
-      image?: SpotifyProfileImage
-   }
+      interface Device {
+         name: string
+         type: string
+         volume: number | null
+      }
 
-   interface SpotifyTrackImage extends SpotifyProfileImage {}
+      interface Track {
+         title: string
+         artists: string
+         album: string
+         albumArt?: Image
+         progressMs: number | null
+         durationMs: number
+      }
 
-   interface SpotifyDevice {
-      name: string
-      type: string 
-      volume: Number | null
-   }
-
-   interface SpotifyTrack {
-      title: string 
-      artists: string
-      album: string
-      albumImage?: SpotifyTrackImage
-      progressMilli: Number | null
-      durationMilli: Number
-   }
-
-   interface SpotifyPlaybackStatus {
-      device: SpotifyDevice
-      track: SpotifyTrack
-      isPlaying: boolean
+      interface PlaybackInfo {
+         device: Device
+         track: Track
+         playing: boolean
+      }
    }
 }
