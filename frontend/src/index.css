@@ -13,14 +13,14 @@
 
 body {
   /* background: linear-gradient(rgba(30, 215, 96, 1), rgba(25, 20, 20, 1)); */
-  background: linear-gradient(90deg, rgb(27, 58, 28), rgba(18, 18, 18));
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: linear-gradient(90deg, rgb(27, 58, 28), rgba(18, 18, 18)) no-repeat fixed;
   background-size: 200% 200%;
   font-family: Raleway, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   animation: gradient 10s ease infinite;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 @keyframes gradient {

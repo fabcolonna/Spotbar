@@ -10,7 +10,6 @@ import { Player } from './components/Player'
 import { Utils } from './utils'
 
 import './index.css'
-import Spinner from './components/Spinner'
 
 const SpotbarRoutes = () => {
    const [logged, setLogged] = useState(false)
@@ -50,7 +49,6 @@ const SpotbarRoutes = () => {
             />
             <Route path='/player' element={logged ? <Player /> : <Navigate to='/' />} />
             <Route path='/error/:message' element={<Error onLogout={logout} />} />
-            <Route path='/wait' element={<Spinner />} />
          </Routes>
       </AnimatePresence>
    )

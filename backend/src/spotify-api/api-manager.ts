@@ -41,6 +41,7 @@ export default class SpotifyApiManager {
             volume: body.device.volume_percent
          },
          track: {
+            id: body.item.id,
             title: body.item.name,
             // @ts-ignore
             artists: body.item['artists'].map(obj => obj.name).join(', '),
@@ -55,5 +56,37 @@ export default class SpotifyApiManager {
          },
          playing: body.is_playing
       } : undefined
+   }
+
+   public togglePlayback = async (_: any, value: 'play' | 'pause') => {
+      await this.tokenManager.refresh()
+      value === 'play'
+         ? await this.engine.play({})
+         : await this.engine.pause({})
+   }
+
+   public skipTrack = async (_: any, which: 'previous' | 'next') => {
+      await this.tokenManager.refresh()
+      which === 'previous'
+         ? await this.engine.skipToPrevious()
+         : await this.engine.skipToNext()
+   }
+
+   public isTrackSaved = async (_: any, id: string): Promise<boolean> => {
+      await this.tokenManager.refresh()
+      const res = await this.engine.containsMySavedTracks([id])
+      if (!res.body) throw new Error('Could not check if track: "' + id + '" is saved: Bad response')
+
+      return res.body[0]
+   }
+
+   public toggleSaveTrack = (_: any, id: string): Promise<'added' | 'removed'> => {
+      return new Promise(async resolve => {
+         await this.tokenManager.refresh()
+
+         await this.isTrackSaved(_, id)
+            ? await this.engine.removeFromMySavedTracks([id]).then(() => resolve('removed'))
+            : await this.engine.addToMySavedTracks([id]).then(() => resolve('added'))
+      })
    }
 }

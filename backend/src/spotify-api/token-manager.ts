@@ -28,7 +28,9 @@ const spotifyScopes = [
    'user-read-email',
    'user-read-currently-playing',
    'user-read-playback-state',
-   'user-modify-playback-state'
+   'user-modify-playback-state',
+   'user-library-modify',
+   'user-library-read'
 ]
 
 export default class SpotifyTokenManager {

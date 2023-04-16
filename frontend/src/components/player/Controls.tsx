@@ -1,56 +1,34 @@
+import { useContext } from 'react'
+import { nullPlayback, playerContext } from '../Player'
+import { motion } from 'framer-motion'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
    faBackwardStep,
    faForwardStep,
    faHeart,
    faLaptop,
    faPause,
-   faPlay,
-   faPowerOff,
+   faPlay, faPowerOff,
    faSignOut
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpotify } from '@fortawesome/free-brands-svg-icons'
-import { nullPlayback, playerContext } from './Player'
-import { useContext } from 'react'
-import { motion } from 'framer-motion'
 
-export function AlbumArt(props: { art: Spotify.Image }) {
-   return (
-      <motion.div
-         className='flex-1 max-h-fit min-h-fit min-w-fit max-w-fit scale-[0.8] shadow-2xl rounded-full shadow-gray-900 z-20 album-img'
-         initial={{ opacity: 0, x: '100%' }}
-         animate={{ opacity: 1, x: '0%', transition: { type: 'spring', stiffness: 70, damping: 15 } }}
-         exit={{ opacity: 0, x: '100%', transition: { ease: 'easeIn' } }}
-      >
-         <motion.img
-            alt='cover'
-            src={props.art.url}
-            className='h-screen rounded-full shadow-2x shadow-gray-600'
-            animate={{ rotate: 360 }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} />
-      </motion.div>
-   )
+
+// TODO: Progress bar and timestamps
+// TODO: Animate PlaybackControls in/out
+
+export interface ControlsEvents {
+   trackSaved: boolean
+
+   onTogglePlayback: () => void,
+   onSkipTrack: (which: 'previous' | 'next') => void,
+   onToggleSaveTrack: () => void,
 }
 
-export function PlaybackControls() {
+export default function PlaybackControls(props: ControlsEvents) {
    const info = useContext(playerContext)
 
-   const addToFavorites = () => {}
-
-   const openSpotifyConnect = () => {}
-
-   const backwardsPlayback = () => {}
-
-   const playPausePlayback = () => {}
-
-   const forwardsPlayback = () => {}
-
-   const logout = () => {}
-
-   const quit = () => {}
-
    return (
-      <motion.div className={`flex-1 flex flex-col h-screen items-center justify-center ${info !== nullPlayback ? 'w-fit' : 'w-screen'}`}
+      <motion.div className={`flex-1 flex flex-col h-screen -ml-3 items-center justify-center ${info !== nullPlayback ? 'w-fit' : 'w-screen'}`}
                   initial={{ opacity: 0, scale: 0.5, x: '0%' }}
                   animate={
                      info !== nullPlayback
@@ -60,43 +38,46 @@ export function PlaybackControls() {
                   exit={{ opacity: 0, scale: 0.5, x: '0%', transition: { ease: 'easeIn' } }}
       >
          <div className='flex justify-between items-center'>
-            <button className='small-control-btn text-white' onClick={addToFavorites}>
+            <button className='small-control-btn text-white' onClick={props.onToggleSaveTrack} style={props.trackSaved ? { backgroundColor: '#1db954' } : {}}>
                <FontAwesomeIcon icon={faHeart} fixedWidth />
             </button>
 
             <TextualInfo />
 
             <button className='small-control-btn text-white'>
-               <FontAwesomeIcon icon={faLaptop} fixedWidth onClick={openSpotifyConnect}/>
+               <FontAwesomeIcon icon={faLaptop} fixedWidth />
             </button>
          </div>
 
          <section>
             <div className='mb-5 mt-10'>
                <button className='control-btn px-4 py-4 bg-transparent text-white'>
-                  <FontAwesomeIcon icon={faBackwardStep} size='2x' fixedWidth onClick={backwardsPlayback} />
+                  <FontAwesomeIcon icon={faBackwardStep} size='2x' fixedWidth onClick={() => props.onSkipTrack('previous')} />
                </button>
 
                <button className='control-btn'>
-                  <FontAwesomeIcon icon={info.playing ? faPlay : faPause} size='2x' fixedWidth onClick={playPausePlayback} />
+                  <FontAwesomeIcon icon={info.playing ? faPause : faPlay} size='2x' fixedWidth onClick={props.onTogglePlayback} />
                </button>
 
-               <button className='control-btn px-4 py-4 bg-transparent text-white' onClick={forwardsPlayback}>
+               <button className='control-btn px-4 py-4 bg-transparent text-white' onClick={() => props.onSkipTrack('next')}>
                   <FontAwesomeIcon icon={faForwardStep} size='2x' fixedWidth/>
                </button>
             </div>
          </section>
 
          <button className='absolute right-0 bottom-0 px-1 py-1 bg-transparent text-white'>
-            <FontAwesomeIcon icon={faSignOut} fixedWidth onClick={logout}/>
+            <FontAwesomeIcon icon={faSignOut} fixedWidth />
          </button>
 
-         <button className='absolute right-0 top-0 px-1 py-1 bg-transparent text-white' onClick={quit}>
+         <button className='absolute right-0 top-0 px-1 py-1 bg-transparent text-white' >
             <FontAwesomeIcon icon={faPowerOff} fixedWidth/>
          </button>
       </motion.div>
    )
 }
+
+
+// TODO: Animate TextualInfo scroll if text is too long
 
 function TextualInfo() {
    const info = useContext(playerContext)
@@ -118,5 +99,4 @@ function TextualInfo() {
       </div>
    )
 }
-
 

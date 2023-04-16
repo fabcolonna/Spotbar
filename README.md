@@ -1,12 +1,16 @@
-<p align="center">
-  <img src="./assets/big_color_icon.png" alt="Spotbar Icon"/>
+<p>
+  <img src="assets/readme/big_color_icon.png" alt="Spotbar Icon"/>
 </p>
 
 # **Spotbar**
 
-Spotbar aims to be a small app that runs in the macOS menu bar (Windows/Linux support may be present, but I haven't had a chance to test it out yet and I'm not fully focusing on the code that is necessary to make the app working correctly on those OSes), that offers media controls (back, play/pause, forward), album art and details, artist info and progress bar (NOT present *at all* at the moment 🌞). I'm also considering adding a spectrum analyzer in the background for no particular reason other than aesthetics 🎶.
+Spotbar is a cute little app that runs in the macOS menu bar (Windows/Linux support may be present, but I haven't had a chance to test it out yet and I'm not fully focusing on the code that is necessary to make the app working correctly on those OSes), that offers media controls (back, play/pause, forward), album art, track info, and the ability to interact with the Spotify Connect (so you'll be able to send audio streaming to other available devices directly in the widget). I'm also considering adding a spectrum analyzer in the background for no particular reason other than aesthetics 🎶, but that's not a priority.
 
 The idea behind all this is not having to open Spotify app for such basic actions. I know there are many alternatives, but this one could be potentially quite convenient IMO.
+
+<p>
+  <img src="assets/readme/spotbar.png" alt="Spotbar Screenshot"/>
+</p>
 
 ## Getting Started
 
@@ -35,7 +39,9 @@ You should now be back in the root directory. In here, run `yarn dev` to run the
 
 ## Spotify API
 
-This app relies on Spotify API. By logging into the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) you can get the authentication details that this app requires (Client ID & Client SECRET). Setup your `.env` file in the root directory using the reference `.env.example` file provided, and you should be good to go.
+This app relies on Spotify API. Rather than building my own library to interact with them, Spotbar relies on an amazing open source library named [`spotify-web-api-node`](https://github.com/thelinmichael/spotify-web-api-node) offered by [Michael Thelin aka. @thelinmicheael](https://github.com/thelinmichael).
+
+Currently, in order to use Spotbar, you have to create your personal *client_id* and *client_secret* by logging into the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/). Once you have them, you can setup your `.env` file in the root directory using the reference `.env.example` file provided. After that, you should be good to go. Note that this procedure is not the permanent way: I'm thinking about various solutions, that will be implemented only when i feel like Spotbar is ready.
 
 ## Built With
 

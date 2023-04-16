@@ -19,6 +19,7 @@ declare global {
       }
 
       interface Track {
+         id: string
          title: string
          artists: string
          album: string

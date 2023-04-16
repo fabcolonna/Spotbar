@@ -13,7 +13,7 @@ export default class SpotbarApplication {
    private win!: BrowserWindow
    private tray!: Tray
 
-   constructor(width: number = 700, height: number = 300) {
+   constructor(width: number = 720, height: number = 320) {
       if (process.platform === 'darwin') app.dock.hide()
       app.on('window-all-closed', () => app.quit())
       app.whenReady().then(() => {
@@ -43,7 +43,6 @@ export default class SpotbarApplication {
          }
       })
 
-
       win.loadURL(isDev ? 'http://localhost:3000' : resources.html)
       win.setVisibleOnAllWorkspaces(true)
       win.setAlwaysOnTop(true)
@@ -69,4 +68,6 @@ export default class SpotbarApplication {
    }
 
    public forceShow = () => this.tray.emit('click')
+
+   public visible = () => this.win.isVisible()
 }
