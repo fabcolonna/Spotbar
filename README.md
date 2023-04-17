@@ -4,11 +4,19 @@
 
 # **Spotbar**
 
-Spotbar is a cute little app that runs in the macOS menu bar (Windows/Linux support may be present, but I haven't had a chance to test it out yet and I'm not fully focusing on the code that is necessary to make the app working correctly on those OSes), that offers media controls (back, play/pause, forward), album art, track info, and the ability to interact with the Spotify Connect (so you'll be able to send audio streaming to other available devices directly in the widget). I'm also considering adding a spectrum analyzer in the background for no particular reason other than aesthetics 🎶, but that's not a priority.
+Spotbar is a cute little widget-app that runs in the macOS menu bar - Windows/Linux support may be present, but I haven't had a chance to test it out yet and I'm not fully focusing on the code that is necessary to make the app working correctly on those OSes - that offers:
+- Media controls: Previous track, Play/Pause, Next track, Add/Remove to your library;
+- Album art displayed like a spinning disk,
+- Track informations, such as Title, Artists, Album name;
+- Info about which device it is currently playing through Spotify (since Spotify has a Connect feature that lets you choose the device on which you'd like to stream music).
 
-The idea behind all this is not having to open Spotify app for such basic actions. I know there are many alternatives, but this one could be potentially quite convenient IMO.
+Spotbar will soon have the ability to interact with Spotify Connect, so you'll be able to send audio streaming to other available devices directly in the widget.
 
-<p>
+The idea behind all this is not having to open the Spotify app for such basic actions, and control music playback coming from other devices directly in the menu bar. I love tray application because they help me doing specific things very quickly. 
+
+Since I'm pretty obsessed with UI design, I'm trying to make Spotbar as clean and minimal as possible, while also providing some nice animations. I'm even thinking about adding a spectrum analyzer in the background for no particular reason other than aesthetics!
+
+<p align='center'>
   <img src="assets/readme/spotbar.png" alt="Spotbar Screenshot"/>
 </p>
 
@@ -41,7 +49,7 @@ You should now be back in the root directory. In here, run `yarn dev` to run the
 
 This app relies on Spotify API. Rather than building my own library to interact with them, Spotbar relies on an amazing open source library named [`spotify-web-api-node`](https://github.com/thelinmichael/spotify-web-api-node) offered by [Michael Thelin aka. @thelinmicheael](https://github.com/thelinmichael).
 
-Currently, in order to use Spotbar, you have to create your personal *client_id* and *client_secret* by logging into the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/). Once you have them, you can setup your `.env` file in the root directory using the reference `.env.example` file provided. After that, you should be good to go. Note that this procedure is not the permanent way: I'm thinking about various solutions, that will be implemented only when i feel like Spotbar is ready.
+Currently, in order to use Spotbar, you have to create your personal *client_id* and *client_secret* by logging into the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/). Once you have them, you can setup your `.env` file in the root directory using the reference `.env.example` file provided. After that, you should be good to go. This can (and I'm pretty sure it will) change pretty soon, i.e. as soon as Spotbar reaches a form that I consider complete.
 
 ## Built With
 
