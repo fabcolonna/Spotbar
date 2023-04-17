@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeImage, Tray, globalShortcut } from 'electron'
+import { app, BrowserWindow, nativeImage, Tray } from 'electron'
 import isDev from 'electron-is-dev'
 import positioner from 'electron-traywindow-positioner'
 import path from 'path'
@@ -49,10 +49,6 @@ export default class SpotbarApplication {
       win.setVisibleOnAllWorkspaces(true)
       win.setAlwaysOnTop(true)
       win.on('blur', () => this.win.hide())
-
-      globalShortcut.register('F11', () => {
-         win.setFullScreen(!win.isFullScreen())
-      })
 
       return win
    }
