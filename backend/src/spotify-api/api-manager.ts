@@ -9,7 +9,7 @@ export default class SpotifyApiManager {
 
    constructor(spotbarApp: SpotbarApplication, clientId: string, clientSecret: string) {
       if (!clientId || ! clientSecret) {
-         dialog.showErrorBox('Fatal error!', 'Missing Spotify credentials in .env file!')
+         dialog.showErrorBox('Fatal error!', 'Missing Spotify credentials in .env file! Spotbar will now close.')
          app.quit()
       }
 

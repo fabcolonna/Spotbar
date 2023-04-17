@@ -16,7 +16,7 @@ The idea behind all this is not having to open the Spotify app for such basic ac
 
 Since I'm pretty obsessed with UI design, I'm trying to make Spotbar as clean and minimal as possible, while also providing some nice animations. I'm even thinking about adding a spectrum analyzer in the background for no particular reason other than aesthetics!
 
-<p align='center'>
+<p>
   <img src="assets/readme/spotbar.png" alt="Spotbar Screenshot"/>
 </p>
 
@@ -28,7 +28,9 @@ The node package manager `npm` is also required. If you grabbed the installer fr
 
 ## Installing
 
-Before starting, install `yarn` with the command `(sudo) npm install --global yarn`. Then clone this repo and install the required modules:
+Before starting, install `yarn` with the command `(sudo) npm install --global yarn`. This app is written in TypeScript, so the `tsc` compiler is required before starting up. Type `tsc` in the command line to find out if you already have it install. If you don't, install it through `npm` by typing `(sudo) npm install --global typscript`.
+
+You are officially ready! Clone this repo and install the required modules:
 
 ```
 git clone https://github.com/levarr/Spotbar
