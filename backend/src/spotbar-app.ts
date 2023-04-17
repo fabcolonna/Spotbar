@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeImage, Tray } from 'electron'
+import { app, BrowserWindow, nativeImage, Tray, Menu } from 'electron'
 import isDev from 'electron-is-dev'
 import positioner from 'electron-traywindow-positioner'
 import path from 'path'
@@ -17,6 +17,7 @@ export default class SpotbarApplication {
 
    constructor(width: number = 720, height: number = 320) {
       if (process.platform === 'darwin') app.dock.hide()
+
       app.on('window-all-closed', () => app.quit())
       app.whenReady().then(() => {
          this.win = this.makeWindow(width, height)
@@ -56,15 +57,29 @@ export default class SpotbarApplication {
    private makeTray = (): Tray => {
       const icon = nativeImage.createFromPath(resources.icon)
 
-      const tray = new Tray(icon)
-      tray.setIgnoreDoubleClickEvents(true)
-      tray.on('click', () => {
+      const toggleVisibility = () => {
          if (this.win.isVisible()) this.win.hide()
          else {
             positioner.position(this.win, this.tray.getBounds())
             this.win.show()
          }
-      })
+      }
+
+      const tray = new Tray(icon)
+      process.platform === 'darwin' && tray.setIgnoreDoubleClickEvents(true)
+
+      // Linux handles tray icons differently: a context menu is needed to open/quit the app
+      // because the 'click' event on the tray object itself is never sent
+      if (process.platform === 'linux') {
+         const contextMenu = Menu.buildFromTemplate([
+            { label: 'Open App', click: toggleVisibility },
+            { label: 'Quit', click: () => app.quit() }
+         ])
+
+         tray.setContextMenu(contextMenu)
+      }
+
+      tray.on('click', () => process.platform !== 'linux' && toggleVisibility())
 
       return tray
    }
