@@ -1,25 +1,27 @@
 import SpotifyWebApi from 'spotify-web-api-node'
 import SpotbarApplication from '../spotbar-app'
 import SpotifyTokenManager from './token-manager'
-import { app, dialog } from 'electron'
 
 export default class SpotifyApiManager {
    private readonly engine: SpotifyWebApi
    private readonly tokenManager: SpotifyTokenManager
 
    constructor(spotbarApp: SpotbarApplication, clientId: string, clientSecret: string) {
-      if (!clientId || ! clientSecret) {
-         dialog.showErrorBox('Fatal error!', 'Missing Spotify credentials in .env file! Spotbar will now close.')
-         app.quit()
-      }
-
       this.engine = new SpotifyWebApi({ clientId: clientId, clientSecret: clientSecret })
       this.tokenManager = new SpotifyTokenManager(spotbarApp, this.engine)
    }
 
    public getMe = async (): Promise<Spotify.Me> => {
+      const id = this.engine.getClientId()
+      const sec = this.engine.getClientSecret()
+
+      console.log('CREDS!!! ', id, ' ', sec)
+      if (!id || id.length === 0 || !sec || sec.length === 0)
+         throw new Error('Missing Spotify credentials. Check the .env file!')
+
       await this.tokenManager.assign()
-      const me = await this.engine.getMe() // If rejected, error is propagated
+
+      const me = await this.engine.getMe()
       if (!me.body) throw new Error('Could not retrieve your Spotify profile info: Bad response')
 
       const body = me.body
