@@ -1,12 +1,18 @@
 import SpotifyWebApi from 'spotify-web-api-node'
 import SpotbarApplication from '../spotbar-app'
 import SpotifyTokenManager from './token-manager'
+import { app, dialog } from 'electron'
 
 export default class SpotifyApiManager {
    private readonly engine: SpotifyWebApi
    private readonly tokenManager: SpotifyTokenManager
 
    constructor(spotbarApp: SpotbarApplication, clientId: string, clientSecret: string) {
+      if (!clientId || ! clientSecret) {
+         dialog.showErrorBox('Fatal error!', 'Missing Spotify credentials in .env file!')
+         app.quit()
+      }
+
       this.engine = new SpotifyWebApi({ clientId: clientId, clientSecret: clientSecret })
       this.tokenManager = new SpotifyTokenManager(spotbarApp, this.engine)
    }

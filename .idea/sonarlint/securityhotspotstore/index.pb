@@ -11,3 +11,23 @@ E
 package.json,7/0/7030d0b2f71b999ff89a343de08c414af32fc93a
 E
 frontend/src/utils.ts,c/4/c48314e1e9b74a78078f02a604e7ffcf71731f3c
+Q
+!frontend/src/components/Login.tsx,a/6/a66fbe0050a62097905bcc8664dd80b86b25638f
+Q
+!frontend/src/components/Error.tsx,3/d/3d318930808a44b00c293d324ff2adf41f80f25f
+S
+#frontend/src/components/Welcome.tsx,7/8/78a0894e1cf6c021404ebad7480ab0a5a208af66
+M
+frontend/src/types/index.d.ts,d/9/d902c2d3fa016fd8a36c67faac2584cac3e6ac77
+[
++frontend/src/components/player/AlbumArt.tsx,4/4/44f5958cce5254e6e58f61a1642088c0bbb49950
+C
+resources/test.json,f/9/f92a9fb17e04ca3535cdb0743f84ded9feae6219
+L
+backend/src/types/index.d.ts,e/4/e42d394de4429588a1ac20937b22e105a957125c
+F
+frontend/src/index.css,9/1/91e522be11677dbeaea3b85493b4868d2728cb6c
+X
+(backend/src/spotify-api/token-manager.ts,a/e/ae1c419c12bd657f47a00a75f5b53ee32d087e26
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d

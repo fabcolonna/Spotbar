@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, nativeImage, Tray } from 'electron'
+import { app, BrowserWindow, nativeImage, Tray, globalShortcut } from 'electron'
 import isDev from 'electron-is-dev'
 import positioner from 'electron-traywindow-positioner'
 import path from 'path'
@@ -8,6 +8,8 @@ const resources = {
    icon: path.join(__dirname, '../../../assets/icon/icon_16x16@2x.png'),
    preload: path.join(__dirname, './preload.js')
 }
+
+// TODO: ADD FULLSCREEN SUPPORT
 
 export default class SpotbarApplication {
    private win!: BrowserWindow
@@ -31,7 +33,7 @@ export default class SpotbarApplication {
          titleBarStyle: 'hidden',
          frame: false,
          resizable: false,
-         fullscreenable: false,
+         //fullscreenable: false,
          movable: false,
          minimizable: false,
          maximizable: false,
@@ -47,6 +49,10 @@ export default class SpotbarApplication {
       win.setVisibleOnAllWorkspaces(true)
       win.setAlwaysOnTop(true)
       win.on('blur', () => this.win.hide())
+
+      globalShortcut.register('F11', () => {
+         win.setFullScreen(!win.isFullScreen())
+      })
 
       return win
    }
