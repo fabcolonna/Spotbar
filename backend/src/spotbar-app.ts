@@ -72,7 +72,7 @@ export default class SpotbarApplication {
       // because the 'click' event on the tray object itself is never sent
       if (process.platform === 'linux') {
          const contextMenu = Menu.buildFromTemplate([
-            { label: 'Open App', click: toggleVisibility },
+            { label: 'Open Spotbar', click: toggleVisibility },
             { label: 'Quit', click: () => app.quit() }
          ])
 
