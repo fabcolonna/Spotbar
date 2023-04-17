@@ -29,5 +29,3 @@ F
 frontend/src/index.css,9/1/91e522be11677dbeaea3b85493b4868d2728cb6c
 X
 (backend/src/spotify-api/token-manager.ts,a/e/ae1c419c12bd657f47a00a75f5b53ee32d087e26
-9
-	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d

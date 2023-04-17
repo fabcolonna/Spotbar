@@ -28,7 +28,7 @@ The node package manager `npm` is also required. If you grabbed the installer fr
 
 ## Installing
 
-Before starting, install `yarn` with the command `npm install --global yarn`. Then clone this repo and install the required modules:
+Before starting, install `yarn` with the command `(sudo) npm install --global yarn`. Then clone this repo and install the required modules:
 
 ```
 git clone https://github.com/levarr/Spotbar
