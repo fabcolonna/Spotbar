@@ -1589,11 +1589,6 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
-"@react-buddy/ide-toolbox@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@react-buddy/ide-toolbox/-/ide-toolbox-2.3.1.tgz#4e3815eab3198dddcb360b9874640dbd468cb870"
-  integrity sha512-xH4rVPvG8nADggIFJk3mlAQtZg05HwhPcsdnPhHw9JMuxSQi8qXG+0ImQSS58QjIFY9BGtAv2geAbIPBuh9q0w==
-
 "@remix-run/router@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.5.0.tgz#57618e57942a5f0131374a9fdb0167e25a117fdc"
