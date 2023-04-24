@@ -1,0 +1,13 @@
+{
+  "forceConsistentCasingInFileNames": true,
+  "noFallthroughCasesInSwitch": true,
+  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+  "include": ["electron.vite.config.*", "src/main/*", "src/preload/*", "src/@types"],
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "strict": true,
+    "composite": true,
+    "types": ["electron-vite/node"],
+    "typeRoots": ["src/@types"]
+  }
+}
