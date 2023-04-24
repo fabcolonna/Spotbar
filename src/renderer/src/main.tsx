@@ -1,20 +1,20 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { StrictMode, useState } from 'react'
 import ReactDOM from 'react-dom/client'
-
-import Error from './components/Error'
-import Login from './components/Login'
-import Welcome from './components/Welcome'
-import { Player } from './components/Player'
-
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { SpotifyMe } from '../../@types/spotify'
 import './assets/index.css'
 import { checkConnection } from './utilities/utils'
-import { SpotifyMe } from '../../@types/spotify'
+import { Err, Login, Player, Welcome } from './components'
+
+type Status = {
+  logged: boolean
+  user?: SpotifyMe
+}
 
 const SpotbarRoutes = () => {
-  const [logged, setLogged] = useState(false)
-  const [userData, setUserData] = useState<SpotifyMe>({ name: '' })
+  const LOGGED_OUT: Status = { logged: false }
+  const [status, setStatus] = useState<Status>(LOGGED_OUT)
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -26,28 +26,21 @@ const SpotbarRoutes = () => {
       () => {
         window.spotify
           .getMe()
-          .then(me => {
-            setUserData(me)
-            setLogged(true)
-          })
+          .then(me => setStatus({ logged: true, user: me }))
           .catch(err => navigate('/error/' + err))
       }
     )
   }
 
-  const logout = () => {
-    setUserData({ name: '' })
-    setLogged(false)
-    navigate('/')
-  }
+  const logout = () => setStatus(LOGGED_OUT)
 
   return (
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={logged ? <Navigate to="/welcome" /> : <Login onLogin={login} />} />
-        <Route path="/welcome" element={logged ? <Welcome {...userData} onLogout={logout} /> : <Navigate to="/" />} />
-        <Route path="/player" element={logged ? <Player /> : <Navigate to="/" />} />
-        <Route path="/error/:message" element={<Error onLogout={logout} />} />
+        <Route path="/" element={status.logged ? <Navigate to="/welcome" /> : <Login onLogin={login} />} />
+        <Route path="/welcome" element={<Welcome {...status.user!} onLogout={logout} />} />
+        <Route path="/player" element={<Player />} />
+        <Route path="/error/:message" element={<Err onLogout={logout} />} />
       </Routes>
     </AnimatePresence>
   )

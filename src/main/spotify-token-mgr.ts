@@ -1,9 +1,9 @@
-import { BrowserWindow } from 'electron'
-import SpotifyWebApi from 'spotify-web-api-node'
 import crypto from 'crypto'
-import moment from 'moment'
+import { BrowserWindow } from 'electron'
 import express from 'express'
 import * as http from 'http'
+import moment from 'moment'
+import SpotifyWebApi from 'spotify-web-api-node'
 import Spotbar from './spotbar'
 
 interface TokenInfo {
@@ -32,16 +32,16 @@ export default class SpotifyTokenManager {
     this.spotbar = spotbar
   }
 
-  public Assign = async (): Promise<void> => {
-    if (this.Valid()) return
+  public assign = async (): Promise<void> => {
+    if (this.valid()) return
 
-    this.token = await this.Retrieve()
+    this.token = await this.retrieve()
     this.api.setAccessToken(this.token.access)
     this.api.setRefreshToken(this.token.refresh)
   }
 
-  public Refresh = async (): Promise<void> => {
-    if (this.Valid()) return
+  public refresh = async (): Promise<void> => {
+    if (this.valid()) return
 
     const res = await this.api.refreshAccessToken()
     if (!res.body) throw new Error('Could not refresh token(s): Bad response')
@@ -56,9 +56,9 @@ export default class SpotifyTokenManager {
     this.api.setRefreshToken(this.token.refresh)
   }
 
-  public Valid = (): boolean | undefined => (this.token ? this.token.expires.diff(moment(), 's') > 0 : undefined)
+  public valid = (): boolean | undefined => (this.token ? this.token.expires.diff(moment(), 's') > 0 : undefined)
 
-  private Retrieve = async (): Promise<TokenInfo> => {
+  private retrieve = async (): Promise<TokenInfo> => {
     this.api.setRedirectURI('http://localhost:8888/cback')
     const state = crypto.randomBytes(20).toString('hex')
     const authURL = this.api.createAuthorizeURL(SpotifyTokenManager.SCOPES, state, false)
@@ -75,7 +75,7 @@ export default class SpotifyTokenManager {
     }, 300) // Waits for the server to load
 
     const code = await new Server('/cback', 8888).getAuthCode()
-    this.spotbar.ToggleVisibility()
+    this.spotbar.toggleVisibility()
     browser.close()
 
     const tok = await this.api.authorizationCodeGrant(code)

@@ -1,16 +1,14 @@
 import { faPlay, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { SpotifyMe } from '../../../@types/spotify'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { SpotifyMe } from '../../../@types/spotify'
 
 interface Props extends SpotifyMe {
   onLogout: () => void
 }
 
 export default function Welcome(props: Props) {
-  const navigate = useNavigate()
-
   return (
     <motion.div
       initial={{ opacity: 0, x: '100%' }}
@@ -30,10 +28,10 @@ export default function Welcome(props: Props) {
         <div className="mt-1">
           <button className="login-btn-smaller mr-2" onClick={props.onLogout}>
             <FontAwesomeIcon icon={faSignOut} size="1x" fixedWidth className="mr-2 inline-block" />
-            <span className="inline-block pr-1">Sign out</span>
+            <span className="inline-block pr-1">Logout</span>
           </button>
 
-          <button className="login-btn-smaller ml-2" onClick={() => navigate('/player')}>
+          <button className="login-btn-smaller ml-2" onClick={() => useNavigate()('/player')}>
             <FontAwesomeIcon icon={faPlay} size="1x" fixedWidth className="mr-2 inline-block" />
             <span className="inline-block pr-1">Continue</span>
           </button>

@@ -1,20 +1,20 @@
+import dotenv from 'dotenv'
 import { ipcMain } from 'electron'
+import path from 'path'
 import Spotbar from './spotbar'
 import SpotifyApiManager from './spotify-api-mgr'
-import dotenv from 'dotenv'
-import path from 'path'
 
-dotenv.config({ path: path.join(__dirname, '../../../.env') })
+dotenv.config({ path: path.join(__dirname, '../../.env') })
 
 const spotbar = new Spotbar()
 const api = new SpotifyApiManager(spotbar, process.env.CLIENT_ID!, process.env.CLIENT_SECRET!)
 
-ipcMain.handle('windowVisible', spotbar.ToggleVisibility)
-ipcMain.on('quit', () => spotbar.Quit)
+ipcMain.handle('windowVisible', spotbar.toggleVisibility)
+ipcMain.on('quit', () => spotbar.quit)
 
-ipcMain.handle('getMe', api.GetMe)
-ipcMain.handle('fetchPlaybackInfo', api.FetchPlaybackInfo)
-ipcMain.handle('togglePlayback', api.TogglePlayback)
-ipcMain.handle('skipTrack', api.SkipTrack)
-ipcMain.handle('isTrackSaved', api.IsTrackSaved)
-ipcMain.handle('toggleSaveTrack', api.ToggleSaveTrack)
+ipcMain.handle('getMe', api.getMe)
+ipcMain.handle('fetchPlaybackInfo', api.fetchPlaybackInfo)
+ipcMain.handle('togglePlayback', api.togglePlayback)
+ipcMain.handle('skipTrack', api.skipTrack)
+ipcMain.handle('isTrackSaved', api.isTrackSaved)
+ipcMain.handle('toggleSaveTrack', api.toggleSaveTrack)

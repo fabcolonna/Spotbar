@@ -1,8 +1,8 @@
+import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
 
-export default function Error(props: { onLogout: () => void }) {
+export default function Err(props: { onLogout: () => void }) {
   const [inputOff, setInputOff] = useState(false)
   const { message } = useParams()
 

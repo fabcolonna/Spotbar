@@ -1,7 +1,7 @@
 import SpotifyWebApi from 'spotify-web-api-node'
-import SpotifyTokenManager from './spotify-token-mgr'
-import Spotbar from './spotbar'
 import { SpotifyMe, SpotifyPlaybackInfo } from '../@types/spotify'
+import Spotbar from './spotbar'
+import SpotifyTokenManager from './spotify-token-mgr'
 
 export default class SpotifyApiManager {
   private readonly api: SpotifyWebApi
@@ -12,11 +12,11 @@ export default class SpotifyApiManager {
     this.tokenManager = new SpotifyTokenManager(spotbar, this.api)
   }
 
-  public GetMe = async (): Promise<SpotifyMe> => {
+  public getMe = async (): Promise<SpotifyMe> => {
     const [id, secret] = [this.api.getClientId(), this.api.getClientSecret()]
     if (!id || id.length === 0 || !secret || secret.length === 0) throw new Error('Missing Spotify credentials')
 
-    await this.tokenManager.Assign()
+    await this.tokenManager.assign()
 
     const me = await this.api.getMe()
     if (!me.body) throw new Error('Could not retrieve your Spotify profile info: Bad response')
@@ -30,10 +30,10 @@ export default class SpotifyApiManager {
     }
   }
 
-  public FetchPlaybackInfo = async (): Promise<SpotifyPlaybackInfo | undefined> => {
-    if (this.tokenManager.Valid() === undefined) throw new Error('Could not get playback info: Did you log in? :/')
+  public fetchPlaybackInfo = async (): Promise<SpotifyPlaybackInfo | undefined> => {
+    if (this.tokenManager.valid() === undefined) throw new Error('Could not get playback info: Did you log in? :/')
 
-    await this.tokenManager.Refresh()
+    await this.tokenManager.refresh()
     const info = await this.api.getMyCurrentPlaybackState()
     if (!info.body) throw new Error('Could not get playback info: Bad response')
 
@@ -59,27 +59,27 @@ export default class SpotifyApiManager {
         }
   }
 
-  public TogglePlayback = async (_: any, value: 'play' | 'pause'): Promise<void> => {
-    await this.tokenManager.Refresh()
+  public togglePlayback = async (_: any, value: 'play' | 'pause'): Promise<void> => {
+    await this.tokenManager.refresh()
     value === 'play' ? await this.api.play({}) : await this.api.pause({})
   }
 
-  public SkipTrack = async (_: any, which: 'previous' | 'next'): Promise<void> => {
-    await this.tokenManager.Refresh()
+  public skipTrack = async (_: any, which: 'previous' | 'next'): Promise<void> => {
+    await this.tokenManager.refresh()
     which === 'previous' ? await this.api.skipToPrevious() : await this.api.skipToNext()
   }
 
-  public IsTrackSaved = async (_: any, id: string): Promise<boolean> => {
-    await this.tokenManager.Refresh()
+  public isTrackSaved = async (_: any, id: string): Promise<boolean> => {
+    await this.tokenManager.refresh()
     const res = await this.api.containsMySavedTracks([id])
     if (!res.body) throw new Error('Could not check if track: "' + id + '" is saved: Bad response')
 
     return res.body[0]
   }
 
-  public ToggleSaveTrack = async (_: any, id: string): Promise<'added' | 'removed' | undefined> => {
-    await this.tokenManager.Refresh()
-    ;(await this.IsTrackSaved(_, id))
+  public toggleSaveTrack = async (_: any, id: string): Promise<'added' | 'removed' | undefined> => {
+    await this.tokenManager.refresh()
+    ;(await this.isTrackSaved(_, id))
       ? await this.api.removeFromMySavedTracks([id]).then(() => Promise.resolve('removed'))
       : await this.api.addToMySavedTracks([id]).then(() => Promise.resolve('added'))
 
