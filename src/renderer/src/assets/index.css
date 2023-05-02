@@ -56,6 +56,11 @@ body {
     @apply font-semibold text-xl;
   }
 
+  input {
+    @apply shadow-2xl duration-200 ease-linear items-center;
+    @apply hover:scale-105 hover:transition;
+  }
+
   button {
     @apply shadow-2xl font-extrabold duration-200 ease-linear items-center;
     @apply hover:scale-110 hover:text-white hover:transition;

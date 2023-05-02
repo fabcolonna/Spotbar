@@ -74,7 +74,11 @@ export default class SpotifyTokenManager {
       browser.show()
     }, 300) // Waits for the server to load
 
-    const code = await new Server('/cback', 8888).getAuthCode()
+    const server = new Server('/cback', 8888)
+    const code = await server.getAuthCode()
+
+    server.dispose()
+
     this.spotbar.sendClickEvent()
     browser.close()
 
@@ -97,6 +101,7 @@ class Server {
 
   private readonly endpoint: string
   private readonly port: number
+  private server: http.Server | undefined
 
   constructor(endpoint: string, port: number) {
     this.endpoint = (endpoint[0] !== '/' ? '/' : '') + endpoint
@@ -105,9 +110,6 @@ class Server {
 
   public getAuthCode = (): Promise<string> => {
     return new Promise((resolve, reject) => {
-      // eslint-disable-next-line prefer-const
-      let server: http.Server
-
       const expr = express()
       expr.get(this.endpoint, (req, res) => {
         try {
@@ -119,11 +121,15 @@ class Server {
             resolve(req.query.code as string)
           }
         } finally {
-          server.close(() => console.log('AuthServer closed'))
+          this.server!.close(() => console.log('AuthServer closed'))
         }
       })
 
-      server = expr.listen(this.port, () => console.log('AuthServer listening...'))
+      this.server = expr.listen(this.port, () => console.log('AuthServer listening...'))
     })
+  }
+
+  public dispose = (): void => {
+    this.server && this.server.close(() => console.log('AuthServer disposed'))
   }
 }

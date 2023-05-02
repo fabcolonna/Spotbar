@@ -17,8 +17,10 @@ const spotbarApi = {
   isVisible: (): Promise<boolean> => ipcRenderer.invoke('isWindowVisible'),
   quit: (): Promise<void> => ipcRenderer.invoke('quit'),
   resize: (how: 'big' | 'compact'): Promise<'big' | 'compact'> => ipcRenderer.invoke('resize', how),
-  setCredentials: (creds: SpotifyCredentials): void => ipcRenderer.send('setCredentials', creds),
-  unsetCredentials: (): void => ipcRenderer.send('unsetCredentials')
+
+  didFindCredentials: (): Promise<boolean> => ipcRenderer.invoke('didFindCredentials'),
+  loadCredentials: (values: SpotifyCredentials): Promise<boolean> => ipcRenderer.invoke('loadCredentials', values),
+  unloadCredentials: (): void => ipcRenderer.send('unloadCredentials')
 }
 
 if (process.contextIsolated) {
