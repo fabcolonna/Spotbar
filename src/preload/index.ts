@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import { SpotifyCredentials, SpotifyMe, SpotifyPlaybackInfo } from '../@types/spotify'
+import { SpotifyCredentials, SpotifyDevice, SpotifyMe, SpotifyPlaybackInfo } from '../@types/spotify'
 
 const spotifyApi = {
   getMe: (): Promise<SpotifyMe> => ipcRenderer.invoke('getMe'),
@@ -7,14 +7,18 @@ const spotifyApi = {
   togglePlayback: (value: 'play' | 'pause'): Promise<void> => ipcRenderer.invoke('togglePlayback', value),
   skipTrack: (which: 'previous' | 'next'): Promise<void> => ipcRenderer.invoke('skipTrack', which),
   isTrackSaved: (id: string): Promise<boolean> => ipcRenderer.invoke('isTrackSaved', id),
-  toggleSaveTrack: (id: string): Promise<'added' | 'removed'> => ipcRenderer.invoke('toggleSaveTrack', id)
+  toggleSaveTrack: (id: string): Promise<'added' | 'removed'> => ipcRenderer.invoke('toggleSaveTrack', id),
+  getSpotifyConnectDevices: (): Promise<SpotifyDevice[]> => ipcRenderer.invoke('getDevices'),
+  setVolume: (volume: number, device: SpotifyDevice): Promise<void> => ipcRenderer.invoke('setVolume', volume, device),
+  changeStreamingDevice: (device: SpotifyDevice): Promise<void> => ipcRenderer.invoke('changeStreamingDevice', device)
 }
 
 const spotbarApi = {
-  isVisible: (): Promise<boolean> => ipcRenderer.invoke('windowVisible'),
+  isVisible: (): Promise<boolean> => ipcRenderer.invoke('isWindowVisible'),
+  quit: (): Promise<void> => ipcRenderer.invoke('quit'),
+  resize: (how: 'big' | 'compact'): Promise<'big' | 'compact'> => ipcRenderer.invoke('resize', how),
   setCredentials: (creds: SpotifyCredentials): void => ipcRenderer.send('setCredentials', creds),
-  unsetCredentials: (): void => ipcRenderer.send('unsetCredentials'),
-  quit: (): void => ipcRenderer.send('quit')
+  unsetCredentials: (): void => ipcRenderer.send('unsetCredentials')
 }
 
 if (process.contextIsolated) {

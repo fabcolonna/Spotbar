@@ -15,9 +15,11 @@ export type SpotifyImage = {
 }
 
 export type SpotifyDevice = {
+  id: string | null
   name: string
   type: string
   volume: number | null
+  isActive: boolean
 }
 
 export type SpotifyTrack = {
@@ -27,11 +29,14 @@ export type SpotifyTrack = {
   album: string
   albumArt?: SpotifyImage
   progressMs: number | null
+  progressPercent: number | null
+  progressMMSS: string | null
   durationMs: number
+  durationMMSS: string
 }
 
 export type SpotifyPlaybackInfo = {
   device: SpotifyDevice
   track: SpotifyTrack
-  playing: boolean
+  isPlaying: boolean
 }

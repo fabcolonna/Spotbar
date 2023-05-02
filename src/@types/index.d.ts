@@ -4,9 +4,10 @@ declare global {
   interface Window {
     spotbar: {
       isVisible: () => Promise<boolean>
+      quit: () => Promise<void>
+      resize: (how: 'big' | 'compact') => Promise<'big' | 'compact'>
       setCredentials: (creds: import('./spotify').SpotifyCredentials) => void
       unsetCredentials: () => void
-      quit: () => void
     }
 
     spotify: {
@@ -16,6 +17,9 @@ declare global {
       skipTrack: (which: 'previous' | 'next') => Promise<void>
       isTrackSaved: (id: string) => Promise<boolean>
       toggleSaveTrack: (id: string) => Promise<'added' | 'removed'>
+      getSpotifyConnectDevices: () => Promise<import('./spotify').SpotifyDevice[]>
+      setVolume: (volume: number, device: import('./spotify').SpotifyDevice) => Promise<void>
+      changeStreamingDevice: (device: import('./spotify').SpotifyDevice) => Promise<void>
     }
   }
 }

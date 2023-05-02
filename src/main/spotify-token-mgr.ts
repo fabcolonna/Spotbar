@@ -75,7 +75,7 @@ export default class SpotifyTokenManager {
     }, 300) // Waits for the server to load
 
     const code = await new Server('/cback', 8888).getAuthCode()
-    this.spotbar.toggleVisibility()
+    this.spotbar.sendClickEvent()
     browser.close()
 
     const tok = await this.api.authorizationCodeGrant(code)

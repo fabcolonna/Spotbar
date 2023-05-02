@@ -1,5 +1,5 @@
 <p>
-SPOTBAR ICON
+<img src="./resources/icon_huge.png">
 </p>
 
 # **Spotbar**
@@ -7,16 +7,15 @@ SPOTBAR ICON
 Spotbar is a cute little widget-app that runs in your macOS/Windows/Linux menu bar, that offers
 
 - Media controls: Previous track, Play/Pause, Next track, Add/Remove to your library;
-- Album art displayed like a spinning disk,
-- Track information, such as Title, Artists, Album name;
-- Info about which device it is currently playing through Spotify (since Spotify has a Connect feature that lets you choose the device on which you'd like to stream music).
-
-Spotbar will soon have the ability to interact with Spotify Connect, so you'll be able to send audio streaming to other available devices directly in the widget.
+- Album art displayed like a spinning disk, or a more compact version that hides it for a more minimal look;
+- Track information, such as Title, Artists, Album name, Duration and Progress time;
+- Info about which device it is currently playing (since Spotify has a Connect feature that lets you choose the device on which you'd like to stream music);
+- Ability to interact with Spotify Connect: you're able to send audio stream to other available devices directly in the widget, and control their relative volume
 
 The idea behind all this is not having to open the Spotify app for such basic actions, and control music playback coming from other devices directly in the menu bar. I love tray applications in general, because their main goal is to make certain common actions very quickly accessible.
 
 <p>
-SPOTBAR SCREENSHOT
+<img src="./resources/readme_screenshots/main_view.png">
 </p>
 
 ## Getting Started
@@ -31,27 +30,27 @@ Currently, in order to use Spotbar, you have to create your personal _client_id_
 
 ## Installing
 
-Before starting, install `yarn` with the command `(sudo) npm install --global yarn`. This app is written in TypeScript, so the `tsc` compiler is required; type `tsc` in the command line to find out if you already have it installed. If you don't, install it through `npm` by typing `(sudo) npm install --global typscript`.
+This app is written in TypeScript, so the `tsc` compiler is required; type `tsc` in the command line to find out if you already have it installed. If you don't, install it through `npm` by typing `(sudo) npm install --global typscript`.
 
 Ok, you're now ready: clone this repo and install the required modules:
 
 ```
 git clone https://github.com/levarr/Spotbar
 cd Spotbar
-yarn install
+npm install
 ```
 
 Once the operation is complete, you can:
 
-- Start the application in development mode with the following command: `yarn (run) dev`;
-- Build the application for your specific OS using `yarn (run) build:{win,mac,linux}`.
+- Start the application in development mode with the following command: `npm run dev`;
+- Build the application for your specific OS using `npm run build:{win,mac,linux}`.
 
 NB: Extensive documentation on the build commands won't be available until I actually try those on different machines with the various OSes. If you wanna use them right now and errors pop up, you'll need to sort them out yourself. I have to fully understand the _notarize_ process involved in Mac building yet.
 
 ## Built With
 
 - [Electron.js](https://www.electronjs.org/)
-- [React.js](https://reactjs.org/)
+- [React.js](https://reactjs.org/) with Redux Toolkit & Framer Motion
 - [ViteJS](https://vitejs.dev)
 - [TailwindCSS](https://tailwindcss.com/)
 
