@@ -48,7 +48,7 @@ export default function Player(props: { onLogout: () => void }) {
     }, 1000)
 
     return () => clearInterval(ival)
-  }, []) // Executes once
+  }, [pbDispatch]) // Executes once
 
   useEffect(() => {
     if (!pbInfo.track.albumArt) {
@@ -72,7 +72,10 @@ export default function Player(props: { onLogout: () => void }) {
     onTogglePlayback: async () => await window.spotify.togglePlayback(pbInfo.isPlaying ? 'pause' : 'play'),
     onSkipTrack: async (which: 'previous' | 'next') => await window.spotify.skipTrack(which),
     onToggleSaveTrack: async () => await window.spotify.toggleSaveTrack(pbInfo.track.id).then(res => setTrackSaved(res === 'added')),
-    onLogout: props.onLogout,
+    onLogout: () => {
+      winSize === 'compact' && toggleWindowSize()
+      props.onLogout()
+    },
     onQuit: window.spotbar.quit,
     onShowSpotifyConnect: () => navigate('/sconnect')
   }

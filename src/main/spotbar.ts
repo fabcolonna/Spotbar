@@ -1,5 +1,5 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { BrowserWindow, Menu, Tray, app, dialog, nativeImage, shell } from 'electron'
+import { app, BrowserWindow, dialog, Menu, nativeImage, shell, Tray } from 'electron'
 import positioner from 'electron-traywindow-positioner'
 import path from 'path'
 
@@ -123,7 +123,10 @@ export default class Spotbar {
     tray.setIgnoreDoubleClickEvents(true)
 
     const contextMenu = Menu.buildFromTemplate([
-      { label: 'Open/Close Spotbar', click: this.toggleVisibility },
+      { label: `Show/Hide Spotbar`, click: this.toggleVisibility },
+      { label: 'Separator', type: 'separator' },
+      { label: 'Launch at Login', type: 'checkbox', click: () => alert('Not yet implemented! :(') },
+      { label: 'Settings...', click: () => alert('Not yet implemented! :(') },
       { label: 'Separator', type: 'separator' },
       { label: 'Quit', click: this.quit }
     ])

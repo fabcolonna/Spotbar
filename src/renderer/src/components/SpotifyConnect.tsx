@@ -27,8 +27,6 @@ export default function SpotifyConnect() {
 
   useEffect(() => {
     const ival = setInterval(() => {
-      console.log(isPlaying)
-
       window.spotify
         .getSpotifyConnectDevices()
         .then(setDevices)

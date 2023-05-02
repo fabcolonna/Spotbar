@@ -6,8 +6,9 @@ declare global {
       isVisible: () => Promise<boolean>
       quit: () => Promise<void>
       resize: (how: 'big' | 'compact') => Promise<'big' | 'compact'>
-      setCredentials: (creds: import('./spotify').SpotifyCredentials) => void
-      unsetCredentials: () => void
+      didFindCredentials: () => Promise<boolean>
+      loadCredentials: (creds: import('./spotify').SpotifyCredentials) => Promise<boolean>
+      unloadCredentials: () => void
     }
 
     spotify: {

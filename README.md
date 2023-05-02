@@ -1,5 +1,5 @@
 <p>
-<img src="./resources/icon_huge.png">
+<img src="./resources/icon_32x32@2x.png">
 </p>
 
 # **Spotbar**

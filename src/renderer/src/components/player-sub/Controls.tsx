@@ -24,18 +24,19 @@ export default function Controls(props: ControlsProps) {
   const pbInfo = useSelector((state: RootState) => state.playback)
   const unsetted = useSelector(isUnsetted) // Unstable
 
-  if (unsetted) return (
+  if (unsetted)
+    return (
       <motion.div
-          className={'flex-1 flex flex-col h-screen items-center justify-center w-screen'}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 70, damping: 15 } }}
-          exit={{ opacity: 0, transition: { ease: 'easeIn' } }}
+        className={'flex-1 flex flex-col h-screen items-center justify-center w-screen'}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 70, damping: 15 } }}
+        exit={{ opacity: 0, transition: { ease: 'easeIn' } }}
       >
         <div className="flex justify-between items-center">
           <TextInfo />
         </div>
       </motion.div>
-  )
+    )
 
   return (
     <motion.div
