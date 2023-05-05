@@ -109,6 +109,7 @@ export default class Spotbar {
 
     win.setVisibleOnAllWorkspaces(true)
     win.setAlwaysOnTop(true)
+    win.setSkipTaskbar(true)
     win.on('blur', win.hide)
 
     is.dev && process.env['ELECTRON_RENDERER_URL']
@@ -134,7 +135,7 @@ export default class Spotbar {
     // Linux doesn't support 'right-click' nor can send a click event to toggle visibility when the user
     // clicks directly on the menu bar icon. For Linux users, left click will toggle the context menu, which
     // will be accessible on the other OSes though right-click.
-    if (process.platform === 'linux') tray.popUpContextMenu(contextMenu)
+    if (process.platform === 'linux') tray.setContextMenu(contextMenu)
     else {
       tray.on('right-click', () => tray.popUpContextMenu(contextMenu))
       tray.on('click', this.toggleVisibility)

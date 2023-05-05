@@ -7,6 +7,7 @@ declare global {
       quit: () => Promise<void>
       resize: (how: 'big' | 'compact') => Promise<'big' | 'compact'>
       didFindCredentials: () => Promise<boolean>
+      getOs: () => Promise<string>
       loadCredentials: (creds: import('./spotify').SpotifyCredentials) => Promise<boolean>
       unloadCredentials: () => void
     }

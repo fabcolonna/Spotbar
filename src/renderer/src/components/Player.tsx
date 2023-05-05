@@ -9,10 +9,15 @@ import { RootState } from '@renderer/playback-info-state/pb-store'
 import { set, unset } from '@renderer/playback-info-state/pb-state'
 import { faMaximize, faMinimize } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from '../ui-elements/CustomButtons'
+import {isUnsetted} from "../playback-info-state/pb-state";
+import DeviceIcon from "./spotify-connect-sub/DeviceIcon";
 
 export default function Player(props: { onLogout: () => void }) {
   const pbInfo = useSelector((state: RootState) => state.playback)
+  const unsetted = useSelector(isUnsetted) // Unstable
   const pbDispatch = useDispatch()
+
+  const [os, setOs] = useState<string>()
 
   const [trackSaved, setTrackSaved] = useState(false)
   const [winSize, setWinSize] = useState<'big' | 'compact'>('big')
@@ -28,6 +33,10 @@ export default function Player(props: { onLogout: () => void }) {
       setWinSize(newSize)
     })
   }
+
+  useEffect(() => {
+    window.spotbar.getOs().then(setOs)
+  }, [])
 
   useEffect(() => {
     const ival = setInterval(() => checkNetwork(7, msg => location.pathname !== '/error' && navigate(`/error/${msg}`)), 20000)
@@ -73,12 +82,36 @@ export default function Player(props: { onLogout: () => void }) {
     onSkipTrack: async (which: 'previous' | 'next') => await window.spotify.skipTrack(which),
     onToggleSaveTrack: async () => await window.spotify.toggleSaveTrack(pbInfo.track.id).then(res => setTrackSaved(res === 'added')),
     onLogout: () => {
-      winSize === 'compact' && toggleWindowSize()
+      if (os === 'darwin' && winSize === 'compact') toggleWindowSize()
       props.onLogout()
     },
     onQuit: window.spotbar.quit,
-    onShowSpotifyConnect: () => navigate('/sconnect')
+    onShowSpotifyConnect: () => {
+      if (os === 'darwin' && winSize === 'compact') toggleWindowSize()
+      navigate('/sconnect')
+    }
   }
+
+
+  if (unsetted) return (
+      <motion.div
+          style={{ background: `linear-gradient(90deg, ${getRandomColor(swatch)}, ${getRandomColor(swatch)})` }}
+          animate={{ background: `linear-gradient(90deg, ${getRandomColor(swatch)}, ${getRandomColor(swatch)})` }}
+          transition={{ duration: 7, repeat: Infinity, repeatType: 'reverse' }}
+      >
+        <Controls
+            {...controlsHandlers}
+            fullWidth={true}
+        />
+
+        <button
+            className="small-control-btn text-white"
+            onClick={controlsHandlers.onShowSpotifyConnect}
+        >
+          <DeviceIcon type={pbInfo.device.type} />
+        </button>
+      </motion.div>
+  )
 
   return (
     <motion.div
@@ -91,7 +124,7 @@ export default function Player(props: { onLogout: () => void }) {
           <AlbumArt />
           <Controls
             {...controlsHandlers}
-            fullWidth={true}
+            fullWidth={false}
           />
         </div>
       ) : (
@@ -101,11 +134,11 @@ export default function Player(props: { onLogout: () => void }) {
         />
       )}
 
-      <IconButton
+      {os === 'darwin' && (<IconButton
         className="absolute left-0 top-0 px-1 py-1 bg-transparent text-white"
         iconName={winSize === 'big' ? faMinimize : faMaximize}
         onClick={toggleWindowSize}
-      />
+      />)}
     </motion.div>
   )
 }
