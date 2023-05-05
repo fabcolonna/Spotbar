@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { StrictMode, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import {HashRouter, Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import { SpotifyMe } from '../../@types/spotify'
 import './assets/index.css'
 import { Error, Login, Player, SpotifyConnect, Welcome } from './components'
@@ -183,8 +183,8 @@ const SpotbarRoutes = () => {
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <SpotbarRoutes />
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 )
