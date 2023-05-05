@@ -14,6 +14,7 @@ const spotifyApi = {
 }
 
 const spotbarApi = {
+  getOs: (): Promise<string> => ipcRenderer.invoke('getOs'),
   isVisible: (): Promise<boolean> => ipcRenderer.invoke('isWindowVisible'),
   quit: (): Promise<void> => ipcRenderer.invoke('quit'),
   resize: (how: 'big' | 'compact'): Promise<'big' | 'compact'> => ipcRenderer.invoke('resize', how),

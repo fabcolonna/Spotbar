@@ -40,7 +40,7 @@ export default function DeviceButton(props: { device: SpotifyDevice; isPlaying: 
       onClick={() => window.spotify.changeStreamingDevice(props.device)}
       key={props.device.name}
       style={props.device.isActive && props.isPlaying ? { scale: scaleAnimation } : {}}
-      className={`${props.device.isActive ? 'login-btn button-modified-hover' : 'bg-transparent text-white border-2'} inline-block 
+      className={`${props.device.isActive ? 'login-btn button-modified-hover' : 'bg-transparent text-white border-2 p-1'} inline-block 
       cursor-pointer rounded-full text-center border-[#1db954] m-1 ml-2 mr-2 px-5 py-[0.5]
       `}
     >
@@ -50,7 +50,7 @@ export default function DeviceButton(props: { device: SpotifyDevice; isPlaying: 
       {props.device.name}
       {props.device.isActive ? (
         <div
-          className="inline-flex items-center justify-center ml-2 -mr-2 bg-[#0e5b2a] h-max rounded-full px-4 py-1 text-white"
+          className="inline-flex items-center justify-center ml-2 -mr-2 bg-[#0e5b2a] h-max rounded-full px-4 text-white"
           onWheel={event => onSetVolume(event)}
         >
           <FontAwesomeIcon

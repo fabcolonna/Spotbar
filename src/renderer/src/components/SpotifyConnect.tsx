@@ -40,9 +40,9 @@ export default function SpotifyConnect() {
     <ScaleInSection className="login-sec">
       <h1 className="font-black text-3xl">Where do you wanna cast?</h1>
 
-      <div className="h-[55%] flex items-center justify-center">
+      <div className="h-[55%] flex items-center justify-center flex-wrap w-[85%]">
         {devices.length > 0 ? (
-          devices.map(dev => (
+          devices.slice(0, 9).map(dev => (
             <motion.span
               key={dev.name}
               initial={{ opacity: 0, scale: 0.5 }}

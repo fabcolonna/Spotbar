@@ -35,6 +35,11 @@ linux:
     - deb
   maintainer: levar
   category: Utility
+  desktop:
+    Name: Spotbar
+    Terminal: false
+    Categories: Utility;
+    StartupWMClass: spotbar-tray
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
