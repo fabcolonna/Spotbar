@@ -52,7 +52,7 @@ export default function Player(props: { onLogout: () => void }) {
           if (data) window.spotify.isTrackSaved(data?.track.id).then(setTrackSaved)
         })
         .catch(() => pbDispatch(unset()))
-    }, 1000)
+    }, 400)
 
     return () => clearInterval(ival)
   }, [pbDispatch]) // Executes once
@@ -96,7 +96,7 @@ export default function Player(props: { onLogout: () => void }) {
       animate={{ background: `linear-gradient(90deg, ${getRandomColor(swatch)}, ${getRandomColor(swatch)})` }}
       transition={{ duration: 7, repeat: Infinity, repeatType: 'reverse' }}
     >
-      {pbInfo.track.albumArt && winSize === 'big' ? (
+      {pbInfo.track.album && winSize === 'big' ? (
         <div className="w-screen h-screen flex music-album-div z-10">
           <AlbumArt />
           <Controls

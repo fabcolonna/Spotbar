@@ -33,7 +33,7 @@ export default function Controls(props: ControlsProps) {
         exit={{ opacity: 0, transition: { ease: 'easeIn' } }}
       >
         <div className="flex justify-between items-center">
-          <TextInfo fullWidth={props.fullWidth} />
+          <TextInfo />
         </div>
 
         <button
@@ -47,9 +47,7 @@ export default function Controls(props: ControlsProps) {
 
   return (
     <motion.div
-      className={`flex-1 flex flex-col h-screen ${props.fullWidth ? '' : '-ml-3'} items-center justify-center ${
-        unsetted || props.fullWidth ? 'w-screen' : 'w-fit'
-      }`}
+      className={`flex-1 flex flex-col h-screen ${props.fullWidth ? '' : '-ml-3'} items-center justify-center ${props.fullWidth ? 'w-screen' : 'w-fit'}`}
       initial={{ opacity: 0, scale: 0.5, x: '0%' }}
       animate={!unsetted ? { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 70, damping: 15 } } : { x: '0%', transition: { ease: 'easeIn' } }}
       exit={{ opacity: 0, x: '0%', transition: { ease: 'easeIn' } }}
@@ -62,7 +60,7 @@ export default function Controls(props: ControlsProps) {
           iconName={faHeart}
         />
 
-        <TextInfo fullWidth={props.fullWidth} />
+        <TextInfo />
 
         <button
           className="small-control-btn text-white"

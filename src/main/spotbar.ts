@@ -1,13 +1,11 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { app, BrowserWindow, dialog, Menu, nativeImage, shell, Tray } from 'electron'
+import AutoLaunch from 'auto-launch'
+import { BrowserWindow, Menu, MenuItem, Tray, app, dialog, nativeImage, shell } from 'electron'
 import positioner from 'electron-traywindow-positioner'
-import path from 'path'
+import path, { join } from 'path'
 
 // @ts-ignore
 import icon from '../../resources/icon.png?asset'
-
-// @ts-ignore
-import trayIcon from '../../resources/icon_16x16@2x.png?asset'
 
 export default class Spotbar {
   private readonly widthMax = 720
@@ -15,6 +13,11 @@ export default class Spotbar {
   private readonly height = 320
 
   private readonly singleInstanceLock = app.requestSingleInstanceLock()
+  private readonly autoLauncher = new AutoLaunch({
+    name: 'Spotbar',
+    isHidden: true
+  })
+
   private tray!: Tray
   private win!: BrowserWindow
 
@@ -121,14 +124,15 @@ export default class Spotbar {
   }
 
   private createTray = (): Tray => {
-    const tray = new Tray(nativeImage.createFromPath(trayIcon))
-    tray.setIgnoreDoubleClickEvents(true)
+    const trayIcon = nativeImage.createFromPath(join(__dirname, '../../resources/IconTemplate@2x.png'))
+    trayIcon.setTemplateImage(true)
+    
+    const tray = new Tray(trayIcon)
 
     const contextMenu = Menu.buildFromTemplate([
       { label: `Show/Hide Spotbar`, click: this.toggleVisibility },
       { label: 'Separator', type: 'separator' },
-      { label: 'Launch at Login', type: 'checkbox', click: () => alert('Not yet implemented! :(') },
-      { label: 'Settings...', click: () => alert('Not yet implemented! :(') },
+      { label: 'Launch at Login', type: 'checkbox', click: this.toggleAutoLauncher },
       { label: 'Separator', type: 'separator' },
       { label: 'Quit', click: this.quit }
     ])
@@ -143,5 +147,28 @@ export default class Spotbar {
     }
 
     return tray
+  }
+
+  private toggleAutoLauncher = (menuItem: MenuItem): void => {
+    const showError = e => {
+      dialog.showErrorBox('Spotbar Error', e.message)
+      menuItem.checked = false
+    }
+
+    this.autoLauncher
+      .isEnabled()
+      .then(isIt => {
+        console.log('Requested Toggle Autolaunch: Current status: ' + isIt)
+        isIt
+          ? this.autoLauncher
+              .enable()
+              .then(() => (menuItem.checked = true))
+              .catch(showError)
+          : this.autoLauncher
+              .disable()
+              .then(() => (menuItem.checked = false))
+              .catch(showError)
+      })
+      .catch(showError)
   }
 }

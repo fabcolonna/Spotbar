@@ -2,10 +2,17 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
 import { RootState } from '@renderer/playback-info-state/pb-store'
+import { SpotifyImage } from 'src/@types/spotify'
+
+// @ts-ignore
+import vinyl from '../../../../../resources/vinyl.png?asset'
+
+const AlbumFallback: SpotifyImage = {
+  url: vinyl
+}
 
 export default function AlbumArt() {
-  // If AlbumArt is rendered, pbAlbumArt is defined for sure, thus !
-  const pbAlbumArt = useSelector((state: RootState) => state.playback.track.albumArt!)
+  const pbAlbumArt = useSelector((state: RootState) => state.playback.track.albumArt || AlbumFallback)
 
   const [key, setKey] = useState<string>(pbAlbumArt.url)
   const [stopAnimation, setStopAnimation] = useState(false)
@@ -33,6 +40,7 @@ export default function AlbumArt() {
       <motion.img
         alt="cover"
         src={key}
+        onClick={() => console.log("play album? i'll add it, maybe...")}
         className="h-screen rounded-full shadow-2x shadow-gray-600"
         animate={{ rotate: 360, transition: { duration: 5, repeat: Infinity, ease: 'linear' } }}
       />
