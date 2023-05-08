@@ -71,5 +71,10 @@
     "typescript": "^4.9.5",
     "vite": "^4.2.1",
     "vite-plugin-eslint": "^1.8.1"
+  },
+  "mac": {
+    "extendInfo": {
+      "LSUIElement": "true"
+    }
   }
 }

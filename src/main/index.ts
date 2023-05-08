@@ -10,7 +10,7 @@ import axios from 'axios'
 const TOK_FILE = `${os.tmpdir() + path.sep}info.sb`
 
 const spotbar = new Spotbar()
-ipcMain.handle('getOS', () => process.platform.toString())
+ipcMain.handle('getOs', () => process.platform.toString())
 ipcMain.handle('isWindowVisible', spotbar.isVisible)
 ipcMain.handle('resize', spotbar.resize)
 ipcMain.handle('quit', spotbar.quit)

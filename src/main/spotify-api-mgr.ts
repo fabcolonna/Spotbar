@@ -120,10 +120,11 @@ export default class SpotifyApiManager {
     await this.api.setVolume(volume, device.id ? { device_id: device.id } : {})
   }
 
-  public changeStreamingDevice = async (_: any, device: SpotifyDevice): Promise<void> => {
+  public changeStreamingDevice = async (_: any, device: SpotifyDevice, startPlaying: boolean): Promise<void> => {
     await this.tokenManager.refresh()
 
     if (!device.id) return
     await this.api.transferMyPlayback([device.id])
+    startPlaying && this.api.play({ device_id: device.id })
   }
 }

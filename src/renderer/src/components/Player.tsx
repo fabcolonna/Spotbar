@@ -9,16 +9,14 @@ import { RootState } from '@renderer/playback-info-state/pb-store'
 import { set, unset } from '@renderer/playback-info-state/pb-state'
 import { faMaximize, faMinimize } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from '../ui-elements/CustomButtons'
-import {isUnsetted} from "../playback-info-state/pb-state";
-import DeviceIcon from "./spotify-connect-sub/DeviceIcon";
+import { isUnsetted } from '../playback-info-state/pb-state'
 
 export default function Player(props: { onLogout: () => void }) {
   const pbInfo = useSelector((state: RootState) => state.playback)
-  const unsetted = useSelector(isUnsetted) // Unstable
   const pbDispatch = useDispatch()
+  const unsetted = useSelector(isUnsetted)
 
   const [os, setOs] = useState<string>()
-
   const [trackSaved, setTrackSaved] = useState(false)
   const [winSize, setWinSize] = useState<'big' | 'compact'>('big')
   const [swatch, setSwatch] = useState<string[]>([])
@@ -92,27 +90,6 @@ export default function Player(props: { onLogout: () => void }) {
     }
   }
 
-
-  if (unsetted) return (
-      <motion.div
-          style={{ background: `linear-gradient(90deg, ${getRandomColor(swatch)}, ${getRandomColor(swatch)})` }}
-          animate={{ background: `linear-gradient(90deg, ${getRandomColor(swatch)}, ${getRandomColor(swatch)})` }}
-          transition={{ duration: 7, repeat: Infinity, repeatType: 'reverse' }}
-      >
-        <Controls
-            {...controlsHandlers}
-            fullWidth={true}
-        />
-
-        <button
-            className="small-control-btn text-white"
-            onClick={controlsHandlers.onShowSpotifyConnect}
-        >
-          <DeviceIcon type={pbInfo.device.type} />
-        </button>
-      </motion.div>
-  )
-
   return (
     <motion.div
       style={{ background: `linear-gradient(90deg, ${getRandomColor(swatch)}, ${getRandomColor(swatch)})` }}
@@ -134,11 +111,15 @@ export default function Player(props: { onLogout: () => void }) {
         />
       )}
 
-      {os === 'darwin' && (<IconButton
-        className="absolute left-0 top-0 px-1 py-1 bg-transparent text-white"
-        iconName={winSize === 'big' ? faMinimize : faMaximize}
-        onClick={toggleWindowSize}
-      />)}
+      {os === 'darwin' && !unsetted ? (
+        <IconButton
+          className="absolute left-0 top-0 px-1 py-1 bg-transparent text-white"
+          iconName={winSize === 'big' ? faMinimize : faMaximize}
+          onClick={toggleWindowSize}
+        />
+      ) : (
+        <></>
+      )}
     </motion.div>
   )
 }

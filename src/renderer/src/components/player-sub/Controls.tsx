@@ -33,8 +33,15 @@ export default function Controls(props: ControlsProps) {
         exit={{ opacity: 0, transition: { ease: 'easeIn' } }}
       >
         <div className="flex justify-between items-center">
-          <TextInfo />
+          <TextInfo fullWidth={props.fullWidth} />
         </div>
+
+        <button
+          className="small-control-btn text-white"
+          onClick={props.onShowSpotifyConnect}
+        >
+          <DeviceIcon type={pbInfo.device.type} />
+        </button>
       </motion.div>
     )
 
@@ -55,7 +62,7 @@ export default function Controls(props: ControlsProps) {
           iconName={faHeart}
         />
 
-        <TextInfo />
+        <TextInfo fullWidth={props.fullWidth} />
 
         <button
           className="small-control-btn text-white"

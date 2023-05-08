@@ -63,7 +63,7 @@ export default function SpotifyConnect() {
             animate={{ opacity: 1, transition: { type: 'spring', stiffness: 70, damping: 15 } }}
             exit={{ opacity: 0, scale: 0.5, transition: { ease: 'easeIn' } }}
           >
-            <h2>Loading your devices...</h2>
+            <h2>Searching available devices...</h2>
           </motion.div>
         )}
       </div>

@@ -1,4 +1,4 @@
-import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SpotifyPlaybackInfo } from 'src/@types/spotify'
 import { RootState } from './pb-store'
 
@@ -6,8 +6,8 @@ const NOTHING_PLAYING: SpotifyPlaybackInfo = {
   device: { name: '', type: '', volume: null, isActive: false, id: null },
   track: {
     id: '',
-    title: 'Nothing is playing!',
-    artists: 'Open Spotify somewhere 🎧',
+    title: 'Nothing is playing 🥲',
+    artists: 'Open Spotify somewhere, or select a device below to start playing!',
     album: '',
     progressMs: null,
     durationMs: 0,
