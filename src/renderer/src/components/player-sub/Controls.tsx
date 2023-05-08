@@ -24,6 +24,12 @@ export default function Controls(props: ControlsProps) {
   const pbInfo = useSelector((state: RootState) => state.playback)
   const unsetted = useSelector(isUnsetted) // Unstable
 
+  const handleScrub = event => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const position = (event.clientX - rect.left) / rect.width
+    window.spotify.scrubTo(Math.ceil(position * pbInfo.track.durationMs))
+  }
+
   if (unsetted)
     return (
       <motion.div
@@ -76,7 +82,8 @@ export default function Controls(props: ControlsProps) {
             <div>{pbInfo.track.progressMMSS}</div>
           </h3>
           <Progress.Root
-            className="overflow-hidden rounded-full w-[75%] h-1.5 bg-opacity-50 bg-slate-900"
+            className="overflow-hidden rounded-full w-[75%] h-1.5 bg-opacity-50 bg-slate-900 cursor-pointer"
+            onPointerDown={handleScrub}
             style={{
               transform: 'translateZ(0)'
             }}

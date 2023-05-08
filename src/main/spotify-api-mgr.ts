@@ -75,6 +75,11 @@ export default class SpotifyApiManager {
     value === 'play' ? await this.api.play({}) : await this.api.pause({})
   }
 
+  public scrubTo = async (_: any, ms: number): Promise<void> => {
+    await this.tokenManager.refresh()
+    await this.api.seek(ms)
+  }
+
   public skipTrack = async (_: any, which: 'previous' | 'next'): Promise<void> => {
     await this.tokenManager.refresh()
     which === 'previous' ? await this.api.skipToPrevious() : await this.api.skipToNext()

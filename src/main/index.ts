@@ -30,6 +30,7 @@ const setEndpoints = () => {
   ipcMain.handle('getDevices', api.getSpotifyConnectDevices)
   ipcMain.handle('setVolume', api.setVolume)
   ipcMain.handle('changeStreamingDevice', api.changeStreamingDevice)
+  ipcMain.handle('scrubTo', api.scrubTo)
 }
 
 // At startup, it tries to find the credentials file
