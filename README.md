@@ -60,10 +60,6 @@ NB: Extensive documentation on the build commands won't be available until I act
 - [ViteJS](https://vitejs.dev)
 - [TailwindCSS](https://tailwindcss.com/)
 
-## Contributing
-
-_Work in progress!_
-
 ## Authors
 
 - **Fabio Colonna** - [levarr](https://github.com/levarr)
