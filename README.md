@@ -30,6 +30,12 @@ Currently, in order to use Spotbar, you have to create your personal _client_id_
 
 ## Installing
 
+Grab the package for your OS in the **Releases** page, and you should be ready to go!
+
+## Building
+
+Take this route if Spotbar for you OS has not been packaged yet (it will, pretty soon!), or if you just wanna play around with the code.
+
 This app is written in TypeScript, so the `tsc` compiler is required; type `tsc` in the command line to find out if you already have it installed. If you don't, install it through `npm` by typing `(sudo) npm install --global typscript`.
 
 Ok, you're now ready: clone this repo and install the required modules:
