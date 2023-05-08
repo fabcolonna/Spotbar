@@ -12,7 +12,7 @@ export const checkNetwork = (timeout: number, onNo: (message: string) => void, o
 export const extractHexSwatch = (image: SpotifyImage): Promise<string[]> => {
   return new Promise(resolve => {
     extractColorsFromSrc(image.url, { crossOrigin: 'anonymous' })
-      .then(data => resolve(data.filter(col => col.lightness < 0.4).map(col => col.hex)))
+      .then(data => resolve(data.filter(col => col.lightness < 0.5).map(col => col.hex)))
       .catch(() => resolve([]))
   })
 }

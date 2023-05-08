@@ -7,7 +7,7 @@ const NOTHING_PLAYING: SpotifyPlaybackInfo = {
   track: {
     id: '',
     title: 'Nothing is playing 🥲',
-    artists: 'Open Spotify somewhere, or select a device below to start playing!',
+    artists: 'Open Spotify somewhere, or select a device!',
     album: '',
     progressMs: null,
     durationMs: 0,

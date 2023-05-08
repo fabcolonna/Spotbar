@@ -115,7 +115,9 @@ body {
   }
 
   .scroll-text {
-    animation: scroll 15s ease-in-out 2s infinite alternate;
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll 20s linear infinite alternate;
   }
 
   @keyframes scroll {
@@ -123,7 +125,7 @@ body {
       transform: translateX(0);
     }
     to {
-      transform: translateX(calc(-100% + 200px));
+      transform: translateX(-100%);
     }
   }
 

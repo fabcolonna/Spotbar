@@ -1,5 +1,5 @@
-<p>
-<img src="./resources/icon_32x32@2x.png">
+<p align='center'>
+<img src="./resources/readme/icon.png" width=128>
 </p>
 
 # **Spotbar**
@@ -14,8 +14,8 @@ Spotbar is a cute little widget-app that runs in your macOS/Windows/Linux menu b
 
 The idea behind all this is not having to open the Spotify app for such basic actions, and control music playback coming from other devices directly in the menu bar. I love tray applications in general, because their main goal is to make certain common actions very quickly accessible.
 
-<p>
-<img src="./resources/readme_screenshots/main_view.png">
+<p align='center'>
+<img src="./resources/readme/main_view.png">
 </p>
 
 ## Getting Started
