@@ -33,12 +33,13 @@ export default class Spotbar {
       })
 
     app.on('window-all-closed', this.quit)
-    app.on('browser-window-created', (_: any, window) => optimizer.watchWindowShortcuts(window))
+    app.on('browser-window-created', (_: any, window) => {
+      optimizer.watchWindowShortcuts(window)
+      process.platform === 'darwin' && app.dock.hide()
+    })
 
     app.whenReady().then(() => {
-      process.platform === 'darwin' && app.dock.hide()
       electronApp.setAppUserModelId('org.levar')
-
       this.win = this.createWindow()
       this.tray = this.createTray()
     })

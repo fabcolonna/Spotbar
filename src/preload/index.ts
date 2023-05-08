@@ -10,7 +10,7 @@ const spotifyApi = {
   toggleSaveTrack: (id: string): Promise<'added' | 'removed'> => ipcRenderer.invoke('toggleSaveTrack', id),
   getSpotifyConnectDevices: (): Promise<SpotifyDevice[]> => ipcRenderer.invoke('getDevices'),
   setVolume: (volume: number, device: SpotifyDevice): Promise<void> => ipcRenderer.invoke('setVolume', volume, device),
-  changeStreamingDevice: (device: SpotifyDevice): Promise<void> => ipcRenderer.invoke('changeStreamingDevice', device)
+  changeStreamingDevice: (device: SpotifyDevice, startPlaying: boolean): Promise<void> => ipcRenderer.invoke('changeStreamingDevice', device, startPlaying)
 }
 
 const spotbarApi = {

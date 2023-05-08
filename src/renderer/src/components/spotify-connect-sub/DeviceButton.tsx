@@ -5,10 +5,15 @@ import { useEffect, useState } from 'react'
 import DeviceIcon from './DeviceIcon'
 import { motion } from 'framer-motion'
 import { debounce } from 'lodash'
+import { useSelector } from 'react-redux'
+import { isUnsetted } from '../../playback-info-state/pb-state'
+import { useNavigate } from 'react-router-dom'
 
 export default function DeviceButton(props: { device: SpotifyDevice; isPlaying: boolean }) {
   const [scaleAnimation, setScaleAnimation] = useState(1)
   const [volume, setVolume] = useState(props.device.volume || 0)
+  const unsetted = useSelector(isUnsetted)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const ival = setInterval(() => {
@@ -35,9 +40,15 @@ export default function DeviceButton(props: { device: SpotifyDevice; isPlaying: 
     debounceSendVolume()
   }
 
+  const clicked = () => {
+    window.spotify.changeStreamingDevice(props.device, unsetted).then(() => {
+      setTimeout(() => navigate('/player'), 2000)
+    })
+  }
+
   return (
     <motion.button
-      onClick={() => window.spotify.changeStreamingDevice(props.device)}
+      onClick={clicked}
       key={props.device.name}
       style={props.device.isActive && props.isPlaying ? { scale: scaleAnimation } : {}}
       className={`${props.device.isActive ? 'login-btn button-modified-hover' : 'bg-transparent text-white border-2 p-1'} inline-block 

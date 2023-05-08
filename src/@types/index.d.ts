@@ -21,7 +21,7 @@ declare global {
       toggleSaveTrack: (id: string) => Promise<'added' | 'removed'>
       getSpotifyConnectDevices: () => Promise<import('./spotify').SpotifyDevice[]>
       setVolume: (volume: number, device: import('./spotify').SpotifyDevice) => Promise<void>
-      changeStreamingDevice: (device: import('./spotify').SpotifyDevice) => Promise<void>
+      changeStreamingDevice: (device: import('./spotify').SpotifyDevice, startPlaying: boolean) => Promise<void>
     }
   }
 }
