@@ -51,7 +51,7 @@ export default class Spotbar {
   public quit = (): void => {
     if (this.win) this.win.isVisible() && this.win.hide()
 
-    app.dock.isVisible() && app.dock.hide()
+    process.platform === 'darwin' && app.dock.isVisible() && app.dock.hide()
     this.tray && this.tray.destroy()
     app.quit()
     setTimeout(process.exit, 1000)

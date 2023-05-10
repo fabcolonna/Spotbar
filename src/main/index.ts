@@ -6,11 +6,8 @@ import * as os from 'os'
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { SpotifyCredentials } from '../@types/spotify'
 import axios from 'axios'
-import * as PortAudio from 'naudiodon'
 
 const TOK_FILE = `${os.tmpdir() + path.sep}info.sb`
-
-console.log(PortAudio.getDevices())
 
 const spotbar = new Spotbar()
 ipcMain.handle('getOs', () => process.platform.toString())
