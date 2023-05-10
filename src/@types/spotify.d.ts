@@ -40,3 +40,13 @@ export type SpotifyPlaybackInfo = {
   track: SpotifyTrack
   isPlaying: boolean
 }
+
+export type SpotifyAudioSegment = {
+  start: number
+  duration: number
+  pitches: number[]
+}
+
+export type SpotifyAudioData = {
+  segments: SpotifyAudioSegment[]
+}

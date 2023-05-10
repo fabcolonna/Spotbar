@@ -23,6 +23,7 @@ declare global {
       setVolume: (volume: number, device: import('./spotify').SpotifyDevice) => Promise<void>
       changeStreamingDevice: (device: import('./spotify').SpotifyDevice, startPlaying: boolean) => Promise<void>
       scrubTo: (ms: number) => Promise<void>
+      getAudioData: () => Promise<import('./spotify').SpotifyAudioData | undefined>
     }
   }
 }

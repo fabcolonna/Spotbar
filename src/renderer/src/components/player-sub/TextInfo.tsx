@@ -22,15 +22,15 @@ export default function TextInfo() {
         )}
       </h3>
       <div className={`scroll-cont ${(titleOverflows() && !isPbUnsetted) || 'justify-center flex'}`}>
-        <h2 className={`font-black text-2xl ${(titleOverflows() && !isPbUnsetted) && 'hover:scroll-text'}`}>{pbInfo.track.title}</h2>
+        <h2 className={`font-black text-2xl ${titleOverflows() && !isPbUnsetted && 'hover:scroll-text'}`}>{pbInfo.track.title}</h2>
       </div>
 
       <div className={`scroll-cont ${(albumOverflows() && !isPbUnsetted) || 'justify-center flex'}`}>
-        <h2 className={`font-extrabold text-base ${(albumOverflows() && !isPbUnsetted) && 'hover:scroll-text'}`}>{pbInfo.track.album}</h2>
+        <h2 className={`font-extrabold text-base ${albumOverflows() && !isPbUnsetted && 'hover:scroll-text'}`}>{pbInfo.track.album}</h2>
       </div>
 
       <div className={`scroll-cont ${(artistsOverflows() && !isPbUnsetted) || 'justify-center flex'}`}>
-        <h3 className={`font-normal text-sm text-white text-center ${(artistsOverflows() && !isPbUnsetted) && 'hover:scroll-text'}`}>{pbInfo.track.artists}</h3>
+        <h3 className={`font-normal text-sm text-white text-center ${artistsOverflows() && !isPbUnsetted && 'hover:scroll-text'}`}>{pbInfo.track.artists}</h3>
       </div>
     </div>
   )

@@ -1,15 +1,15 @@
+import { faMaximize, faMinimize } from '@fortawesome/free-solid-svg-icons'
+import { set, unset } from '@renderer/playback-info-state/pb-state'
+import { RootState } from '@renderer/playback-info-state/pb-store'
 import { checkNetwork, extractHexSwatch, getRandomColor } from '@renderer/utilities/utils'
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import Controls from './player-sub/Controls'
-import AlbumArt from './player-sub/AlbumArt'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@renderer/playback-info-state/pb-store'
-import { set, unset } from '@renderer/playback-info-state/pb-state'
-import { faMaximize, faMinimize } from '@fortawesome/free-solid-svg-icons'
-import { IconButton } from '../ui-elements/CustomButtons'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { isUnsetted } from '../playback-info-state/pb-state'
+import { IconButton } from '../ui-elements/CustomButtons'
+import AlbumArt from './player-sub/AlbumArt'
+import Controls from './player-sub/Controls'
 
 export default function Player(props: { onLogout: () => void }) {
   const pbInfo = useSelector((state: RootState) => state.playback)
@@ -41,15 +41,17 @@ export default function Player(props: { onLogout: () => void }) {
     return () => clearInterval(ival)
   }, [location.pathname, navigate])
 
+  
+
   useEffect(() => {
     const ival = setInterval(async () => {
       if (!(await window.spotbar.isVisible())) return
 
       window.spotify
         .fetchPlaybackInfo()
-        .then(async data => {
+        .then(data => {
           data ? pbDispatch(set(data)) : pbDispatch(unset())
-          if (data) window.spotify.isTrackSaved(data?.track.id).then(setTrackSaved)
+          data ? window.spotify.isTrackSaved(data.track.id).then(setTrackSaved) : setTrackSaved(false)
         })
         .catch(() => pbDispatch(unset()))
     }, 400)

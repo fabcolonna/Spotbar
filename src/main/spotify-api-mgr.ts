@@ -1,5 +1,5 @@
 import SpotifyWebApi from 'spotify-web-api-node'
-import { SpotifyDevice, SpotifyMe, SpotifyPlaybackInfo } from '../@types/spotify'
+import { SpotifyAudioData, SpotifyAudioSegment, SpotifyDevice, SpotifyMe, SpotifyPlaybackInfo } from '../@types/spotify'
 import Spotbar from './spotbar'
 import SpotifyTokenManager from './spotify-token-mgr'
 import moment from 'moment'
@@ -131,5 +131,16 @@ export default class SpotifyApiManager {
     if (!device.id) return
     await this.api.transferMyPlayback([device.id])
     startPlaying && this.api.play({ device_id: device.id })
+  }
+
+  public getAudioData = async (): Promise<SpotifyAudioData | undefined> => {
+    await this.tokenManager.refresh()
+
+    const info = await this.fetchPlaybackInfo()
+    if (!info || (info && !info.isPlaying)) return undefined
+
+    const res = await this.api.getAudioAnalysisForTrack(info.track.id)
+    if (!res.body) throw new Error('Could not get audio analysis for the current playing track: Bad response')
+    return { segments: res.body.segments as SpotifyAudioSegment[] }
   }
 }

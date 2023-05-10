@@ -1,6 +1,6 @@
+import axios from 'axios'
 import { extractColorsFromSrc } from 'extract-colors'
 import { SpotifyImage } from '../../../@types/spotify'
-import axios from 'axios'
 
 export const checkNetwork = (timeout: number, onNo: (message: string) => void, onYes?: () => void) => {
   axios

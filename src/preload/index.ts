@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import { SpotifyCredentials, SpotifyDevice, SpotifyMe, SpotifyPlaybackInfo } from '../@types/spotify'
+import { SpotifyAudioData, SpotifyCredentials, SpotifyDevice, SpotifyMe, SpotifyPlaybackInfo } from '../@types/spotify'
 
 const spotifyApi = {
   getMe: (): Promise<SpotifyMe> => ipcRenderer.invoke('getMe'),
@@ -11,7 +11,8 @@ const spotifyApi = {
   getSpotifyConnectDevices: (): Promise<SpotifyDevice[]> => ipcRenderer.invoke('getDevices'),
   setVolume: (volume: number, device: SpotifyDevice): Promise<void> => ipcRenderer.invoke('setVolume', volume, device),
   changeStreamingDevice: (device: SpotifyDevice, startPlaying: boolean): Promise<void> => ipcRenderer.invoke('changeStreamingDevice', device, startPlaying),
-  scrubTo: (ms: number): Promise<void> => ipcRenderer.invoke('scrubTo', ms)
+  scrubTo: (ms: number): Promise<void> => ipcRenderer.invoke('scrubTo', ms),
+  getAudioData: (): Promise<SpotifyAudioData | undefined> => ipcRenderer.invoke('getAudioData')
 }
 
 const spotbarApi = {

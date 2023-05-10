@@ -126,7 +126,7 @@ export default class Spotbar {
   private createTray = (): Tray => {
     const trayIcon = nativeImage.createFromPath(join(__dirname, '../../resources/IconTemplate@2x.png'))
     trayIcon.setTemplateImage(true)
-    
+
     const tray = new Tray(trayIcon)
 
     const contextMenu = Menu.buildFromTemplate([

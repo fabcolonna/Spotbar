@@ -31,6 +31,7 @@ const setEndpoints = () => {
   ipcMain.handle('setVolume', api.setVolume)
   ipcMain.handle('changeStreamingDevice', api.changeStreamingDevice)
   ipcMain.handle('scrubTo', api.scrubTo)
+  ipcMain.handle('getAudioData', api.getAudioData)
 }
 
 // At startup, it tries to find the credentials file
