@@ -41,8 +41,6 @@ export default function Player(props: { onLogout: () => void }) {
     return () => clearInterval(ival)
   }, [location.pathname, navigate])
 
-  
-
   useEffect(() => {
     const ival = setInterval(async () => {
       if (!(await window.spotbar.isVisible())) return
