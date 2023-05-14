@@ -1,13 +1,19 @@
-import { ipcMain } from 'electron'
+import axios from 'axios'
+import { dialog, ipcMain } from 'electron'
+import { existsSync, mkdir, readFileSync, unlinkSync, writeFileSync } from 'fs'
+import * as os from 'os'
 import path from 'path'
+import { SpotifyCredentials } from '../@types/spotify'
 import Spotbar from './spotbar'
 import SpotifyApiManager from './spotify-api-mgr'
-import * as os from 'os'
-import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs'
-import { SpotifyCredentials } from '../@types/spotify'
-import axios from 'axios'
 
-const TOK_FILE = `${os.tmpdir() + path.sep}info.sb`
+const SPOTBAR_DIR = `${os.homedir() + path.sep}.spotbar`
+!existsSync(SPOTBAR_DIR) && mkdir(SPOTBAR_DIR, { recursive: true }, err => {
+  dialog.showErrorBox('Spotbar error', `Could not create/retrieve Spotbar folder: ${err}. Spotbar will now close`)
+  process.exit(1)
+})
+
+const TOK_FILE = `${SPOTBAR_DIR + path.sep}.info.sb`
 
 const spotbar = new Spotbar()
 ipcMain.handle('getOs', () => process.platform.toString())
